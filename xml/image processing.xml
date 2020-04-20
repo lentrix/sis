@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classrecord>
+	<class_code>647</class_code>
+	<name_and_time>ITE 308 - IMAGE PROCESSING1:00-2:00 MWF, 2:00-3:00 MWF</name_and_time>
+	<sem>2nd Sem AY 2011-2012</sem>
+	<qw>3</qw>
+	<pw>3</pw>
+	<ew>4</ew>
+	<qm>100</qm>
+	<pm>100</pm>
+	<em>100</em>
+	<qf>100</qf>
+	<pf>100</pf>
+	<ef>100</ef>
+	<students>
+		<student>
+			<idnum>006615</idnum>
+			<fullname>ANUNCIADO, CHARNIE F.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>93</qf_score>
+			<pf_score>93</pf_score>
+			<ef_score>93</ef_score>
+		</student>
+		<student>
+			<idnum>006127</idnum>
+			<fullname>BALAGA, MARICRIS I.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006747</idnum>
+			<fullname>BANGI, ESTHER CATHERINE O.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>91</qf_score>
+			<pf_score>91</pf_score>
+			<ef_score>91</ef_score>
+		</student>
+		<student>
+			<idnum>006761</idnum>
+			<fullname>BASIO, LOVELY R.</fullname>
+			<qm_score>91</qm_score>
+			<pm_score>91</pm_score>
+			<em_score>91</em_score>
+			<qf_score>91</qf_score>
+			<pf_score>91</pf_score>
+			<ef_score>91</ef_score>
+		</student>
+		<student>
+			<idnum>006586</idnum>
+			<fullname>BATAUSA, JULIE PEARL P.</fullname>
+			<qm_score>87</qm_score>
+			<pm_score>87</pm_score>
+			<em_score>87</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006609</idnum>
+			<fullname>BENDOY, NIMFA S.</fullname>
+			<qm_score>85</qm_score>
+			<pm_score>85</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>005638</idnum>
+			<fullname>BUENAFE, JACOB P.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006554</idnum>
+			<fullname>CADAYONA, PAUL EVAN M.</fullname>
+			<qm_score>93</qm_score>
+			<pm_score>93</pm_score>
+			<em_score>93</em_score>
+			<qf_score>93</qf_score>
+			<pf_score>93</pf_score>
+			<ef_score>95</ef_score>
+		</student>
+		<student>
+			<idnum>006879</idnum>
+			<fullname>CLAROS, MAR JUNEL O.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006642</idnum>
+			<fullname>DANO, ANTONIO JR L.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006744</idnum>
+			<fullname>ESTORBA, FELICISIMO JR. A.</fullname>
+			<qm_score>80</qm_score>
+			<pm_score>80</pm_score>
+			<em_score>80</em_score>
+			<qf_score>80</qf_score>
+			<pf_score>80</pf_score>
+			<ef_score>80</ef_score>
+		</student>
+		<student>
+			<idnum>007049</idnum>
+			<fullname>FUENTES, MA. GENIL D.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>80</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>80</ef_score>
+		</student>
+		<student>
+			<idnum>007644</idnum>
+			<fullname>GOLIS, ROWENA G.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>85</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>80</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006496</idnum>
+			<fullname>GOMEZ, JASTY EARLY C.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006841</idnum>
+			<fullname>HILBERO, NICA MARRIE D.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006908</idnum>
+			<fullname>ITABLE, MARIA AMALETH A.</fullname>
+			<qm_score>88</qm_score>
+			<pm_score>88</pm_score>
+			<em_score>88</em_score>
+			<qf_score>88</qf_score>
+			<pf_score>88</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006771</idnum>
+			<fullname>LAMASON, TROI ANGELO P.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006781</idnum>
+			<fullname>NUÑEZ, JOANA B.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>007107</idnum>
+			<fullname>ORONAN, MA. JASMIN T.</fullname>
+			<qm_score>85</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>85</qf_score>
+			<pf_score>80</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>007679</idnum>
+			<fullname>PACATANG, JOHREN S.</fullname>
+			<qm_score>88</qm_score>
+			<pm_score>88</pm_score>
+			<em_score>88</em_score>
+			<qf_score>86</qf_score>
+			<pf_score>86</pf_score>
+			<ef_score>88</ef_score>
+		</student>
+		<student>
+			<idnum>006589</idnum>
+			<fullname>PILONGO, MARIA CAMIELUZ L.</fullname>
+			<qm_score>88</qm_score>
+			<pm_score>88</pm_score>
+			<em_score>88</em_score>
+			<qf_score>88</qf_score>
+			<pf_score>88</pf_score>
+			<ef_score>95</ef_score>
+		</student>
+		<student>
+			<idnum>006093</idnum>
+			<fullname>REFULLE, JANESSA C</fullname>
+			<qm_score>88</qm_score>
+			<pm_score>88</pm_score>
+			<em_score>90</em_score>
+			<qf_score>88</qf_score>
+			<pf_score>88</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>007379</idnum>
+			<fullname>REVIRO, ROBE JASE S.</fullname>
+			<qm_score>85</qm_score>
+			<pm_score>85</pm_score>
+			<em_score>85</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006740</idnum>
+			<fullname>SONGQUIAWON, JENELYN C.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>90</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>006180</idnum>
+			<fullname>TUDTUD, DIONNE MARTIN B.</fullname>
+			<qm_score>80</qm_score>
+			<pm_score>80</pm_score>
+			<em_score>80</em_score>
+			<qf_score>75</qf_score>
+			<pf_score>75</pf_score>
+			<ef_score>75</ef_score>
+		</student>
+		<student>
+			<idnum>007264</idnum>
+			<fullname>VENTURA, DONNA KATRINA T.</fullname>
+			<qm_score>90</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>90</em_score>
+			<qf_score>91</qf_score>
+			<pf_score>91</pf_score>
+			<ef_score>91</ef_score>
+		</student>
+	</students>
+</classrecord>

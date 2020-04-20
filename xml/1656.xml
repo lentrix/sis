@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<classrecord>
+	<class_code>1656</class_code>
+	<name_and_time>HRM 105. - Personality Development & Public Relation for Hospitality Se<br/>3:00-4:45 M-F</name_and_time>
+	<sem>Summer 2013</sem>
+	<qw>10</qw>
+	<pw>40</pw>
+	<ew>50</ew>
+	<qm>29</qm>
+	<pm>120</pm>
+	<em>58</em>
+	<qf>10</qf>
+	<pf>120</pf>
+	<ef>60</ef>
+	<students>
+		<student>
+			<idnum>006172</idnum>
+			<fullname>ABELLA, MARIA JULY T.</fullname>
+			<qm_score>13</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>43</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>37</ef_score>
+		</student>
+		<student>
+			<idnum>007574</idnum>
+			<fullname>ANISCAL, MARIA ESTHER F.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>120</pm_score>
+			<em_score>48</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>44</ef_score>
+		</student>
+		<student>
+			<idnum>008030</idnum>
+			<fullname>BALBERO, MARIFE R.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>50</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>115</pf_score>
+			<ef_score>43</ef_score>
+		</student>
+		<student>
+			<idnum>008139</idnum>
+			<fullname>BALONGA, ROMULO DEXTER D.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>120</pm_score>
+			<em_score>48</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>56</ef_score>
+		</student>
+		<student>
+			<idnum>008165</idnum>
+			<fullname>BENCITO, OSCAR JR. J.</fullname>
+			<qm_score>15</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>34</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>23</ef_score>
+		</student>
+		<student>
+			<idnum>007806</idnum>
+			<fullname>BOLIVAR, ANA MARIE A.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>120</pm_score>
+			<em_score>50</em_score>
+			<qf_score>9</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>44</ef_score>
+		</student>
+		<student>
+			<idnum>007653</idnum>
+			<fullname>CAJES, JISON M.</fullname>
+			<qm_score>12</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>37</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>115</pf_score>
+			<ef_score>36</ef_score>
+		</student>
+		<student>
+			<idnum>008095</idnum>
+			<fullname>CALAMBA, CLIFFORD G.</fullname>
+			<qm_score>8</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>49</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>50</ef_score>
+		</student>
+		<student>
+			<idnum>007923</idnum>
+			<fullname>CANO, EMERY B.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>52</em_score>
+			<qf_score>9</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>56</ef_score>
+		</student>
+		<student>
+			<idnum>007992</idnum>
+			<fullname>CARAIG, RHEA A.</fullname>
+			<qm_score>29</qm_score>
+			<pm_score>120</pm_score>
+			<em_score>50</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>44</ef_score>
+		</student>
+		<student>
+			<idnum>008191</idnum>
+			<fullname>CELLAN, PATRICK R.</fullname>
+			<qm_score>0</qm_score>
+			<pm_score>70</pm_score>
+			<em_score>43</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>75</pf_score>
+			<ef_score>23</ef_score>
+		</student>
+		<student>
+			<idnum>008143</idnum>
+			<fullname>CLAROS, JESSIE CRIS N.</fullname>
+			<qm_score>8</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>25</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>33</ef_score>
+		</student>
+		<student>
+			<idnum>008110</idnum>
+			<fullname>ESTOSE, JULIE MAE S.</fullname>
+			<qm_score>8</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>32</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>115</pf_score>
+			<ef_score>35</ef_score>
+		</student>
+		<student>
+			<idnum>007643</idnum>
+			<fullname>FRONTERAS, IVY ROSE P.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>54</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>60</ef_score>
+		</student>
+		<student>
+			<idnum>007942</idnum>
+			<fullname>GABUYA, CHARINA V.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>28</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>40</ef_score>
+		</student>
+		<student>
+			<idnum>007927</idnum>
+			<fullname>GETURO, ALIN B.</fullname>
+			<qm_score>15</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>49</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>50</ef_score>
+		</student>
+		<student>
+			<idnum>007554</idnum>
+			<fullname>GUISIHAN, IVY ROSE N.</fullname>
+			<qm_score>17</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>55</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>60</ef_score>
+		</student>
+		<student>
+			<idnum>007145</idnum>
+			<fullname>HALOP, RODEL A.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>30</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>35</ef_score>
+		</student>
+		<student>
+			<idnum>008140</idnum>
+			<fullname>LOZANO, MARK RAYMOND M.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>52</em_score>
+			<qf_score>6</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>60</ef_score>
+		</student>
+		<student>
+			<idnum>007935</idnum>
+			<fullname>MASCARINAS, ANGELICA C.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>40</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>48</ef_score>
+		</student>
+		<student>
+			<idnum>008104</idnum>
+			<fullname>MASCARIÑAS, KEITH B.</fullname>
+			<qm_score>14</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>46</em_score>
+			<qf_score>5</qf_score>
+			<pf_score>115</pf_score>
+			<ef_score>49</ef_score>
+		</student>
+		<student>
+			<idnum>007991</idnum>
+			<fullname>OLIVAR, LEIZL A.</fullname>
+			<qm_score>10</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>33</em_score>
+			<qf_score>5</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>45</ef_score>
+		</student>
+		<student>
+			<idnum>007239</idnum>
+			<fullname>OPIALA, ROCHENE E.</fullname>
+			<qm_score>13</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>33</em_score>
+			<qf_score>0</qf_score>
+			<pf_score>110</pf_score>
+			<ef_score>31</ef_score>
+		</student>
+		<student>
+			<idnum>006294</idnum>
+			<fullname>PADAL, JEFF EARL P.</fullname>
+			<qm_score>14</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>39</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>47</ef_score>
+		</student>
+		<student>
+			<idnum>007887</idnum>
+			<fullname>PALADO, JOEBERT O.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>49</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>43</ef_score>
+		</student>
+		<student>
+			<idnum>008126</idnum>
+			<fullname>RUBA, JOHN RAYMOND V.</fullname>
+			<qm_score>0</qm_score>
+			<pm_score>50</pm_score>
+			<em_score>29</em_score>
+			<qf_score>0</qf_score>
+			<pf_score>50</pf_score>
+			<ef_score>0</ef_score>
+		</student>
+		<student>
+			<idnum>008201</idnum>
+			<fullname>SADORA, ROSALIE S.</fullname>
+			<qm_score>16</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>44</em_score>
+			<qf_score>8</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>47</ef_score>
+		</student>
+		<student>
+			<idnum>007572</idnum>
+			<fullname>SALOMON, LILIBETH T.</fullname>
+			<qm_score>17</qm_score>
+			<pm_score>80</pm_score>
+			<em_score>42</em_score>
+			<qf_score>6</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>53</ef_score>
+		</student>
+		<student>
+			<idnum>008059</idnum>
+			<fullname>SOTTO, MARY LANIE L.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>120</pm_score>
+			<em_score>56</em_score>
+			<qf_score>7</qf_score>
+			<pf_score>118</pf_score>
+			<ef_score>60</ef_score>
+		</student>
+		<student>
+			<idnum>007948</idnum>
+			<fullname>TING, FEMALYN  </fullname>
+			<qm_score>20</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>58</em_score>
+			<qf_score>9</qf_score>
+			<pf_score>120</pf_score>
+			<ef_score>60</ef_score>
+		</student>
+		<student>
+			<idnum>007822</idnum>
+			<fullname>VILLABER, JUDE ANDRE R.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>110</pm_score>
+			<em_score>39</em_score>
+			<qf_score>9</qf_score>
+			<pf_score>115</pf_score>
+			<ef_score>35</ef_score>
+		</student>
+		<student>
+			<idnum>008096</idnum>
+			<fullname>VILLARIASA, RAYMUNDO B.</fullname>
+			<qm_score>0</qm_score>
+			<pm_score>0</pm_score>
+			<em_score>0</em_score>
+			<qf_score>0</qf_score>
+			<pf_score>0</pf_score>
+			<ef_score>0</ef_score>
+		</student>
+	</students>
+</classrecord>

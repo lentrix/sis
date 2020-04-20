@@ -1,0 +1,39 @@
+@media print {
+	* {
+		font-family: arial, helvetica, sans;
+		font-size: 8pt;
+	}
+	
+	a {
+		color: #000;
+		text-decoration: none;
+	}
+	
+	h1{
+		font-size: 24px;
+	}
+	
+	h2{
+		font-size: 20px;
+	}
+	
+	.thead{
+		font-weight: bold;
+		text-align: center;
+		background: #0CF;
+	}
+	tr{
+		padding: 0px;
+	}
+	.tcel {
+		border-bottom: 1px single #333;
+		font-size:8pt;
+		padding: 0px;
+	}
+	.grade_input {
+		display: none;
+	}
+	.noprint{
+		display: none;
+	}
+}

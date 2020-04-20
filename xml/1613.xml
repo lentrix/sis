@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<classrecord>
+	<class_code>1613</class_code>
+	<name_and_time>HRM 102 - FOOD PROCESSING & PRESERVATION WITH LAB<br/>8:00-12:00 SAT</name_and_time>
+	<sem>2nd Sem AY 2012-2013</sem>
+	<qw>30</qw>
+	<pw>35</pw>
+	<ew>35</ew>
+	<qm>60</qm>
+	<pm>100</pm>
+	<em>60</em>
+	<qf></qf>
+	<pf></pf>
+	<ef></ef>
+	<students>
+		<student>
+			<idnum>007026</idnum>
+			<fullname>BALILI, ANA MARIE  A.</fullname>
+			<qm_score>50</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>50</em_score>
+			<qf_score></qf_score>
+			<pf_score></pf_score>
+			<ef_score></ef_score>
+		</student>
+	</students>
+</classrecord>

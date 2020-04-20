@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<classrecord>
+	<class_code>1248</class_code>
+	<name_and_time>ITE 203 - OBJECT ORIENTED PROGRAMMING<br/>11:00-12:00 MWF</name_and_time>
+	<sem>1st Sem AY 2012-2013</sem>
+	<qw>30</qw>
+	<pw>30</pw>
+	<ew>40</ew>
+	<qm>20</qm>
+	<pm>100</pm>
+	<em>150</em>
+	<qf>20</qf>
+	<pf>100</pf>
+	<ef>150</ef>
+	<students>
+		<student>
+			<idnum>007559</idnum>
+			<fullname>AUZA, ANTONETTE J.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>115</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>75</ef_score>
+		</student>
+		<student>
+			<idnum>007480</idnum>
+			<fullname>BAURA, JOSEPH REY L.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>117</em_score>
+			<qf_score>17</qf_score>
+			<pf_score>80</pf_score>
+			<ef_score>100</ef_score>
+		</student>
+		<student>
+			<idnum>007702</idnum>
+			<fullname>CASOL, JUNALYN S.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>105</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>145</ef_score>
+		</student>
+		<student>
+			<idnum>007693</idnum>
+			<fullname>CASTRICIONES, JOFRIMEL B.</fullname>
+			<qm_score>17</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>107</em_score>
+			<qf_score>17</qf_score>
+			<pf_score>70</pf_score>
+			<ef_score>87</ef_score>
+		</student>
+		<student>
+			<idnum>007729</idnum>
+			<fullname>CENITA, JUNMIL      -</fullname>
+			<qm_score>-</qm_score>
+			<pm_score>0</pm_score>
+			<em_score>0</em_score>
+			<qf_score>dr</qf_score>
+			<pf_score>0</pf_score>
+			<ef_score>0</ef_score>
+		</student>
+		<student>
+			<idnum>007046</idnum>
+			<fullname>CERIO, KRISTINE JOY M.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>113</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>93</ef_score>
+		</student>
+		<student>
+			<idnum>007642</idnum>
+			<fullname>CRUZ, JENICA A.</fullname>
+			<qm_score>15</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>115</em_score>
+			<qf_score>17</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>110</ef_score>
+		</student>
+		<student>
+			<idnum>007521</idnum>
+			<fullname>GABUYA, RIZALONA V.</fullname>
+			<qm_score>15</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>109</em_score>
+			<qf_score>17</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>100</ef_score>
+		</student>
+		<student>
+			<idnum>007644</idnum>
+			<fullname>GOLIS, ROWENA G.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>117</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>90</ef_score>
+		</student>
+		<student>
+			<idnum>007342</idnum>
+			<fullname>OMIT, MARJORIE A.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>90</pm_score>
+			<em_score>112</em_score>
+			<qf_score>20</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>105</ef_score>
+		</student>
+		<student>
+			<idnum>007758</idnum>
+			<fullname>OÑAS, JOHN REY C.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>104</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>70</pf_score>
+			<ef_score>-</ef_score>
+		</student>
+		<student>
+			<idnum>008119</idnum>
+			<fullname>SAMUYA, MARICEL C.</fullname>
+			<qm_score>20</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>108</em_score>
+			<qf_score>18</qf_score>
+			<pf_score>90</pf_score>
+			<ef_score>83</ef_score>
+		</student>
+		<student>
+			<idnum>007682</idnum>
+			<fullname>TAGHOY, WINDY M.</fullname>
+			<qm_score>17</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>122</em_score>
+			<qf_score>19</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>108</ef_score>
+		</student>
+		<student>
+			<idnum>007704</idnum>
+			<fullname>TORREON, MA. BELIA S.</fullname>
+			<qm_score>18</qm_score>
+			<pm_score>100</pm_score>
+			<em_score>109</em_score>
+			<qf_score>17</qf_score>
+			<pf_score>100</pf_score>
+			<ef_score>98</ef_score>
+		</student>
+	</students>
+</classrecord>

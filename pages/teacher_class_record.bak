@@ -1,0 +1,398 @@
+<?php include("library/lister.php"); ?>
+<?php include("library/singles.php");?>
+
+<h1>My Class Record</h1>
+
+<div>
+	<form method="post" action="">
+	Select Class: <?php ListClass("class_code", "class_code",
+	        "SELECT class_code, name, descript FROM subjects, class
+	        WHERE class.sub_code=subjects.sub_code
+	        AND tch_num={$_SESSION['tch_num']}
+	        AND sem_code={$_SESSION['sem_code']}",
+	        "font-size: 10pt;"); ?>
+	<input type="submit" name="submit_show_class_record" value="Open Class Record" />
+	</form>
+</div>
+<div class='error' id='errordiv' style="display:none">
+</div>
+<?php 
+function ts($val){
+	if(empty($val)) return "0";
+	else return $val;
+}
+function getTotalScore($qpe, $class_code){
+	$ts = mysql_query("SELECT $qpe FROM class_record WHERE class_code=$class_code");
+	if(mysql_num_rows($ts)==1){
+		$tsr = mysql_fetch_row($ts);
+		return $tsr[0];
+	}else{
+		return "";
+	}
+}
+function getScore($qpe, $class_code, $idnum){
+	$ss = mysql_query("SELECT $qpe FROM scores WHERE idnum=$idnum AND class_code=$class_code");
+	if(mysql_num_rows($ss)==1){
+		$ssr = mysql_fetch_row($ss);
+		return $ssr[0];
+	}else{
+		return "";
+	}
+}
+function setTotalScores($class_code, $qm, $pm, $em, $qf, $pf, $ef, $qw, $pw, $ew){
+	$qm=ts($qm); $pm=ts($pm); $em=ts($em); $qf=ts($qf); $pf=ts($pf); $ef=ts($ef); $qw=ts($qw); $pw=ts($pw); $ew=ts($ew);
+	$ts = mysql_query("SELECT * FROM class_record WHERE class_code=$class_code");
+	if(mysql_num_rows($ts)==1){
+		mysql_query("UPDATE class_record SET qm=$qm, pm=$pm, em=$em, qf=$qf, pf=$pf, ef=$ef, qw=$qw, pw=$pw, ew=$ew WHERE class_code=$class_code");
+	}else{
+		mysql_query("INSERT INTO class_record (class_code, qm, pm, em, qf, pf, ef, qw, pw, ew) 
+		    values ($class_code, $qm, $pm, $em, $qf, $pf, $ef, $qw, $pw, $ew)");
+	}	
+}
+
+function setScores($class_code, $idnum, $qm, $pm, $em, $qf, $pf, $ef){
+	$qm=ts($qm); $pm=ts($pm); $em=ts($em); $qf=ts($qf); $pf=ts($pf); $ef=ts($ef);
+	$ss = mysql_query("SELECT idnum, class_code FROM scores WHERE idnum=$idnum AND class_code=$class_code");
+	if(mysql_num_rows($ss)==1){
+		mysql_query("UPDATE scores  SET qm='$qm', pm='$pm', em='$em', qf='$qf', pf='$pf', ef='$ef' WHERE class_code=$class_code AND idnum=$idnum");
+	}else {
+		mysql_query("INSERT INTO scores (idnum, class_code, qm, pm, em, qf, pf, ef) values ($idnum, $class_code, '$qm', '$pm', '$em', '$qf', '$pf', '$ef')");
+	}
+}
+
+if(isset($_POST['load_xml'])){
+	$xmlfilepath = "xml/" . $_FILES['xmlfile']['name'];
+	move_uploaded_file($_FILES['xmlfile']['tmp_name'], $xmlfilepath);
+	
+	$xml = simplexml_load_file($xmlfilepath);
+	echo "<p>The uploaded xml file will replace an existing class record " . $xml->name_and_time . "</p>";
+	echo "<form method='post' action='' >";
+	echo "<p>Do you want to replace existing class record?</p>";
+	echo "<input type='hidden' name='xmlfilepath' value='$xmlfilepath' />";
+	echo "<input type='submit' name='confirm_replace' value='Confirm Replace' />";
+	echo "<input type='submit' name='cancel' value='Cancel' />";
+	echo "</form>";
+}
+
+if(isset($_POST['confirm_replace'])){
+	$xmlfile = simplexml_load_file($_POST['xmlfilepath']);
+	$class_code = $xmlfile->class_code;
+	$qm = $xmlfile->qm*1;
+	$pm = $xmlfile->pm*1;
+	$em = $xmlfile->em*1;
+	$qf = $xmlfile->qf*1;
+	$pf = $xmlfile->pf*1;
+	$ef = $xmlfile->ef*1;
+	mysql_query("UPDATE class_record SET qm=$xmlfile->qm, pm=$xmlfile->pm, em=$xmlfile->em,
+			qf=$xmlfile->qf, pf=$xmlfile->pf, ef=$xmlfile->ef,
+			qw=$xmlfile->qw, pw=$xmlfile->pw, ew=$xmlfile->ew
+			WHERE class_code = $class_code");
+	if(mysql_error()) echo "<div class='error'>" . mysql_error() . "</div>";
+	foreach($xmlfile->students->children() as $stud){
+		$qm_score = $stud->qm_score*1;
+		$pm_score = $stud->pm_score*1;
+		$em_score = $stud->em_score*1;
+		$qf_score = $stud->qf_score*1;
+		$pf_score = $stud->pf_score*1;
+		$ef_score = $stud->ef_score*1;
+		mysql_query("UPDATE scores SET qm=$qm_score, pm=$pm_score, em=$em_score,
+					 qf=$qf_score, pf=$pf_score, ef=$ef_score
+					 WHERE idnum=$stud->idnum AND class_code=$class_code");
+		if(mysql_error()) echo "<div class='error'>" . mysql_error() . "</div>";
+		else $_REQUEST['class_code'] = $class_code;
+	}
+}
+
+
+if(isset($_REQUEST['class_code'])) { 
+	$class_code=$_REQUEST['class_code'];
+	
+	if(isset($_POST['submit_save_class_record'])){
+		$error = false;
+		
+		setTotalScores($class_code, $_REQUEST['qm'], $_REQUEST['pm'], 
+			$_REQUEST['em'], $_REQUEST['qf'], $_REQUEST['pf'], $_REQUEST['ef'], 
+			$_REQUEST['qw'], $_REQUEST['pw'], $_REQUEST['ew']);
+		
+		if(mysql_error()) $error = mysql_error();
+		
+		$idnums = $_REQUEST['idnum'];
+		$qm_scores = $_REQUEST['qm_score'];
+		$pm_scores = $_REQUEST['pm_score'];
+		$em_scores = $_REQUEST['em_score'];
+		$qf_scores = $_REQUEST['qf_score'];
+		$pf_scores = $_REQUEST['pf_score'];
+		$ef_scores = $_REQUEST['ef_score'];
+		$num = count($idnums);
+		for($i=0; $i<$num; $i++){
+			setScores($class_code, $idnums[$i], 
+				$qm_scores[$i],
+				$pm_scores[$i],
+				$em_scores[$i],
+				$qf_scores[$i],
+				$pf_scores[$i],
+				$ef_scores[$i]);
+			if(mysql_error()) $error= mysql_error();
+		}
+		if($error) echo "<div class='error'>You may have entered an invalid character.
+				<br/>Technical Description:<br/>" . $error ."</div>";
+		else echo "<div class='error'>Class Record has been successfully saved.</div>";
+	}
+	
+	if(isset($_POST['submit_grade'])){
+		$midterms = $_REQUEST['midterm_grade'];
+		$finals = $_REQUEST['final_grade'];
+		$ratings = $_REQUEST['rating'];
+		
+		$idnums = $_REQUEST['idnum'];
+		
+		$num = count($idnums);
+		for($i=0; $i<$num; $i++){
+			$m = $midterms[$i];
+			$f = $finals[$i];
+			$r = $ratings[$i];
+			
+			mysql_query("UPDATE sub_enrol SET fgrade='$f', mgrade='$m', rating='$r' WHERE class_code=$class_code AND idnum={$idnums[$i]}");
+			
+			if(mysql_error()) echo "<div class='error'>" . mysql_error() . "</div>";
+		}
+		$dt = date('Y-m-d');
+		mysql_query("UPDATE class SET grd_sub=1, sub_dt='$dt' WHERE class_code=$class_code");
+		echo "<div class='error'>Finished submitting grades.</div>";
+	}
+        
+?>
+
+<div style="background: #FFF;" id="class_record">
+
+<form action="" method="post">
+
+<input type="submit" title="Create XML File for Upload" class="noprint"
+	name="submit_save_class_record" value=""
+	style="width:30px; height: 30px;
+	float:right;background: url(images/save_icon.png); border: 0px;" />
+
+<input type="submit" title="Upload Class Record" class="noprint"
+	name="submit_create_xml" value=""
+	style="width: 42; height: 30px;
+	float:right;background: url(images/xml_icon.png); border: 0px;" />
+
+
+<center>
+<h3 style="text-align: center; width: 500px;" id="class_name"><?php $classnameandtime=getClassNameAndTime($_REQUEST['class_code'],$_SESSION['sem_code']); echo $classnameandtime; ?></h3>
+<input type="hidden" name="classnameandtime" value="<?php echo $classnameandtime; ?>" />
+<input type="hidden" name="user" value="<?php echo $_SESSION['user']; ?>" />
+<p style="margin-top: 0px; text-align: center;"><?php $semtxt = getSemester($_SESSION['sem_code']); echo $semtxt; ?></p>
+    <input type="hidden" name="semx" value="<?php echo getSemester($_SESSION['sem_code']); ?>" />
+  <table border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+    <tr>
+      <td colspan="2" rowspan="4" align="center">NAME</td>  
+      <td width="90" rowspan="3" align="center">Course &amp; Year</td>
+      <td colspan="2" align="right">Weights:</td>
+      <td colspan="7" align="center">
+        Q = <input type="text" maxlength="3" id="qw" name="qw" class="grade_input" value="<?php echo getTotalScore("qw",$class_code);?>" />
+        P = <input type="text" maxlength="3" id="pw" name="pw" class="grade_input" value="<?php echo getTotalScore("pw",$class_code);?>" />
+        E = <input type="text" maxlength="3" id="ew" name="ew" class="grade_input" value="<?php echo getTotalScore("ew",$class_code);?>" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" align="center">MIDTERM</td>
+      <td colspan="4" align="center">FINAL</td>
+      <td width="45" rowspan="2" align="center">RT</td>
+    </tr>
+    <tr>
+      <td width="30" align="center">Q</td>
+      <td width="30" align="center">P</td>
+      <td width="30" align="center">E</td>
+      <td width="45" align="center">MG</td>
+      <td width="30" align="center">Q</td>
+      <td width="30" align="center">P</td>
+      <td width="30" align="center">E</td>
+      <td width="45" align="center">FG</td>
+    </tr>
+
+    <tr>
+      <input type="hidden" name="class_code" value="<?php echo $class_code ?>" />
+      <td align="center">Totals</td>
+      <td align="center">
+		<input type="text" maxlength="3" id="qm" name="qm" class="grade_input" value="<?php echo getTotalScore("qm",$class_code);?>" /></td>
+      <td align="center">
+		<input type="text" maxlength="3" id="pm" name="pm" class="grade_input" value="<?php echo getTotalScore("pm",$class_code);?>" /></td>
+      <td align="center">
+		<input type="text" maxlength="3" id="em" name="em" class="grade_input" value="<?php echo getTotalScore("em",$class_code);?>" /></td>
+      <td align="center"> </td>
+      <td align="center">
+		<input type="text" maxlength="3" id="qf" name="qf" class="grade_input" value="<?php echo getTotalScore("qf",$class_code);?>" /></td>
+      <td align="center">
+		<input type="text" maxlength="3" id="pf" name="pf" class="grade_input" value="<?php echo getTotalScore("pf",$class_code);?>" /></td>
+      <td align="center">
+		<input type="text" maxlength="3" id="ef" name="ef" class="grade_input" value="<?php echo getTotalScore("ef",$class_code);?>" /></td>      
+      <td align="center"> </td>
+      <td align="center"> </td>
+    </tr>
+<?php 
+$st = mysql_query("SELECT stud_enrol.idnum, 
+			CONCAT(lname,', ',fname,' ',mi) AS 'name', 
+			cr_acrnm, year FROM stud_info, stud_enrol, courses 
+			WHERE stud_enrol.idnum = stud_info.idnum 
+			AND courses.cr_num=stud_enrol.course 
+			AND sem_code={$_SESSION['sem_code']}
+			AND stud_enrol.idnum IN (SELECT sub_enrol.idnum FROM sub_enrol 
+				WHERE sub_enrol.class_code={$_REQUEST['class_code']} AND (rating IS NULL OR rating<>'W'))
+			ORDER BY lname, fname");
+
+$n=1;
+while($strow = mysql_fetch_assoc($st)) {
+	$idnum = $strow['idnum'];
+?>
+	<input type="hidden" name="idnum[]" value="<?php echo $strow['idnum']; ?>" />
+        <input type="hidden" name="fullname[]" value="<?php echo $strow['name'];?>" />
+    <tr>
+		<td width="33"><?php echo $n++ . "." ?></td>
+		<td width="223"><?php echo $strow['name']; ?></td>
+		<td align="center" width="90"><?php echo $strow['cr_acrnm'] . "-" . $strow['year']; ?></td>
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="qm_score_<?php echo $idnum;?>" name="qm_score[]" 
+				onChange="checkValue(document.getElementById('qm'),this)"
+				class="grade_input" value="<?php echo getScore("qm", $class_code, $idnum);?>" />
+		</td>
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="pm_score_<?php echo $idnum;?>" name="pm_score[]" 
+				onChange="checkValue(document.getElementById('pm'),this)"
+				class="grade_input" value="<?php echo getScore("pm", $class_code, $idnum);?>" />
+		</td>
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="em_score_<?php echo $idnum;?>" name="em_score[]" 
+				onChange="checkValue(document.getElementById('em'),this)"
+				class="grade_input" value="<?php echo getScore("em", $class_code, $idnum);?>" />
+		</td>
+		
+		<td align="center" width="45" id="<?php echo "mid_grade_" . $idnum; ?>">
+		    <script type="text/javascript" id="mid_rating_<?php echo $idnum;?>">
+		        percentage = computeGrade(document.getElementById('qm_score_<?php echo $idnum;?>').value,
+		                document.getElementById('pm_score_<?php echo $idnum;?>').value,
+		                document.getElementById('em_score_<?php echo $idnum;?>').value,"m");
+		        document.write("<input type='text' class='grade_output' readonly title='" 
+		                + percentage + "%' value='" + percentage + "' name='midterm_grade[]' id='midterm_<?php echo $idnum;?>' />");
+		    </script>
+		</td>
+		
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="qf_score_<?php echo $idnum;?>" name="qf_score[]" 
+				onChange="checkValue(document.getElementById('qf'),this)"
+				class="grade_input" value="<?php echo getScore("qf", $class_code, $idnum);?>" />
+		</td>
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="pf_score_<?php echo $idnum;?>" name="pf_score[]" 
+				onChange="checkValue(document.getElementById('pf'),this)"
+				class="grade_input" value="<?php echo getScore("pf", $class_code, $idnum);?>" />
+		</td>
+		<td align="center" width="30">
+			<input type="text" maxlength="3" id="ef_score_<?php echo $idnum;?>" name="ef_score[]" 
+				onChange="checkValue(document.getElementById('ef'),this)"
+				class="grade_input" value="<?php echo getScore("ef", $class_code, $idnum);?>" />
+		</td>
+		<td align="center" width="45" id="<?php echo "fin_grade_" . $idnum; ?>">
+		    <script type="text/javascript" id="final_rating_<?php echo $idnum;?>">
+		        percentage = computeGrade(document.getElementById('qf_score_<?php echo $idnum;?>').value,
+		                document.getElementById('pf_score_<?php echo $idnum;?>').value,
+		                document.getElementById('ef_score_<?php echo $idnum;?>').value,"f");
+		        document.write("<input type='text' class='grade_output' readonly title='" 
+		                + percentage + "%' value='" + percentage + "' name='final_grade[]' id='final_<?php echo $idnum;?>' />");
+		    </script>
+		</td>
+		<td align="center" width="45">
+		    
+		    <script type="text/javascript">
+				mid = document.getElementById('midterm_<?php echo $idnum;?>').value;
+				fin = document.getElementById('final_<?php echo $idnum;?>').value;
+				
+				if(mid=='dr' || fin=='dr') rating = 'dr';
+				else if(mid=='wd' || fin=='wd') rating = 'wd';
+				else if(mid=='ng' || fin=='ng') rating = 'ng';
+				else if(mid=='-' || fin=='-') rating= '-';
+				else rating = (6-(( (6-mid) + (6-fin) ) / 2).toFixed(1)).toFixed(1);
+		        document.write("<input type=\"text\" class=\"grade_output\" name=\"rating[]\" value = '" + 
+		                 rating + "' id=\"rating_<?php echo $idnum;?>\" readonly />");
+		    </script>
+		</td>
+    </tr>
+<?php 
+}
+?>
+  
+</table>
+<?php 
+$subg = mysql_query("SELECT grd_sub FROM class WHERE class_code=$class_code");
+$sr = mysql_fetch_row($subg);
+if($sr[0]==1) echo "<span class='noprint' style='margin-top: 10px;'>This gradesheet is closed for submission.</span>";
+else {
+?>
+<input type="submit" name="submit_grade" value="Submit Grades" 
+	class="noprint" style="margin-top: 20px;" />
+<?php } ?>
+</center>
+</form>
+<br />
+<a href="index.php?page=view_gradesheet&class_code=<?php echo $class_code; ?>" 
+   class="noprint">View Grade Sheet</a>
+
+   <?php
+   if(isset($_POST['submit_create_xml'])){
+       foreach($_POST as $key=>$val) $$key=$val;
+       
+       $class_code = $_POST['class_code'];
+       $xmlfile = "xml/" . $class_code . ".xml";
+       $fp = fopen($xmlfile, "w");
+       $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+       $xml.="<classrecord>\n";
+       $xml.="\t<class_code>$class_code</class_code>\n";
+       $xml.="\t<name_and_time>{$_POST['classnameandtime']}</name_and_time>\n";
+       $xml.="\t<sem>{$_POST['semx']}</sem>\n";
+       $xml.="\t<qw>$qw</qw>\n";
+       $xml.="\t<pw>$pw</pw>\n";
+       $xml.="\t<ew>$ew</ew>\n";
+       
+       $xml.="\t<qm>$qm</qm>\n";
+       $xml.="\t<pm>$pm</pm>\n";
+       $xml.="\t<em>$em</em>\n";
+       
+       $xml.="\t<qf>$qf</qf>\n";
+       $xml.="\t<pf>$pf</pf>\n";
+       $xml.="\t<ef>$ef</ef>\n";
+       
+       $xml.="\t<students>\n";
+       $num = count($idnum);
+       for($i=0; $i<$num; $i++) {
+           $xml.="\t\t<student>\n";
+           $xml.="\t\t\t<idnum>{$idnum[$i]}</idnum>\n";
+           $xml.="\t\t\t<fullname>{$fullname[$i]}</fullname>\n";
+           $xml.="\t\t\t<qm_score>{$qm_score[$i]}</qm_score>\n";
+           $xml.="\t\t\t<pm_score>{$pm_score[$i]}</pm_score>\n";
+           $xml.="\t\t\t<em_score>{$em_score[$i]}</em_score>\n";
+           $xml.="\t\t\t<qf_score>{$qf_score[$i]}</qf_score>\n";
+           $xml.="\t\t\t<pf_score>{$pf_score[$i]}</pf_score>\n";
+           $xml.="\t\t\t<ef_score>{$ef_score[$i]}</ef_score>\n";
+           $xml.="\t\t</student>\n";
+       }
+       $xml.="\t</students>\n";
+       $xml.="</classrecord>\n";
+       fwrite($fp, $xml);
+       fclose($fp);
+       echo "<p>You have successfully created an XML file of your class record. 
+        <a href=$xmlfile>Right-click and save link as</a> to download the XML file.</p>";
+   }
+   ?>
+
+</div>
+<?php
+}else {
+?>
+
+<strong>Load Class Record Data From XML File</strong>
+<form method="post" action="" enctype="multipart/form-data">
+	<input type="file" name="xmlfile" />
+	<input type="submit" name="load_xml" value="Load XML File" />
+</form>
+
+<?php } ?>

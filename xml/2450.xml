@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<classrecord>
+	<class_code>2450</class_code>
+	<name_and_time>NATSCI 101 - PHYSICAL SCIENCES<br/>12:00-1:00 MWF</name_and_time>
+	<sem>2nd Sem AY 2013-2014</sem>
+	<qw>30</qw>
+	<pw>30</pw>
+	<ew>40</ew>
+	<qm>50</qm>
+	<pm>50</pm>
+	<em>100</em>
+	<qf>50</qf>
+	<pf>50</pf>
+	<ef>100</ef>
+	<students>
+		<student>
+			<idnum>006971</idnum>
+			<fullname>LEONOR, NIÑO G.</fullname>
+			<qm_score>40</qm_score>
+			<pm_score>44</pm_score>
+			<em_score>80</em_score>
+			<qf_score>45</qf_score>
+			<pf_score>42</pf_score>
+			<ef_score>80</ef_score>
+		</student>
+	</students>
+</classrecord>
