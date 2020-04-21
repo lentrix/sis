@@ -5,35 +5,35 @@
 
 //Submit Action...........................
 if(isset($_POST['submit_account'])) {
-	mysql_query("UPDATE stud_enrol SET rate={$_POST['rate']} WHERE enrol_id={$_POST['enrol_id']}");
-	
+	mysqli_query($db, "UPDATE stud_enrol SET rate={$_POST['rate']} WHERE enrol_id={$_POST['enrol_id']}");
+
 	$n = count($_POST['acct_name']);
 
 	for($i=0; $i<$n; $i++){
-		
+
 		if($_POST['acct_amount'][$i]){
-			$accti = mysql_query("SELECT * FROM acct_item WHERE enrol_id={$_POST['enrol_id']} AND acct_title='{$_POST['acct_name'][$i]}'");
-			if(mysql_num_rows($accti)>0){
-				$sql = "UPDATE acct_item SET amount = {$_POST['acct_amount'][$i]} 
+			$accti = mysqli_query($db, "SELECT * FROM acct_item WHERE enrol_id={$_POST['enrol_id']} AND acct_title='{$_POST['acct_name'][$i]}'");
+			if(mysqli_num_rows($accti)>0){
+				$sql = "UPDATE acct_item SET amount = {$_POST['acct_amount'][$i]}
 					WHERE enrol_id={$_POST['enrol_id']} AND acct_title = '{$_POST['acct_name'][$i]}'";
-				mysql_query($sql);
+				mysqli_query($db, $sql);
 				echo $sql ."<br>";
 			}else{
-				mysql_query("INSERT INTO acct_item (enrol_id, acct_title, amount) 
+				mysqli_query($db, "INSERT INTO acct_item (enrol_id, acct_title, amount)
 							VALUES ({$_POST['enrol_id']},'{$_POST['acct_name'][$i]}',{$_POST['acct_amount'][$i]})");
 			}
 		}
 	}
-	
+
 	echo "<div class='error'>Account Successfully Updated!</div>";
-	
+
 }
 
 if(isset($_POST['add_other_account'])) {
 	if(!empty($_POST['acct_name']) && !empty($_POST['amount'])){
-		mysql_query("INSERT INTO acct_item (enrol_id, acct_title, amount)
+		mysqli_query($db, "INSERT INTO acct_item (enrol_id, acct_title, amount)
 				VALUES ({$_POST['enrol_id']},'{$_POST['acct_name']}',{$_POST['amount']})");
-		echo mysql_error();
+		echo mysqli_error($db);
 	}else{
 		echo "Blank: " . $_POST['acct_name'] . " - " . $_POST['amount'];
 	}
@@ -48,12 +48,12 @@ if(isset($_POST['delete_other'])) { ?>
         <input type="submit" name="cancel" value="Cancel" />
     </form>
     </div>
-<?php	
+<?php
 }
 
 if(isset($_POST['confirm_delete_other'])) {
-	mysql_query("DELETE FROM acct_item WHERE serial={$_POST['serial']}");
-	if(mysql_error()) echo "<div class='error'>" . mysql_error() . "</div>";
+	mysqli_query($db, "DELETE FROM acct_item WHERE serial={$_POST['serial']}");
+	if(mysqli_error($db)) echo "<div class='error'>" . mysqli_error($db) . "</div>";
 	else echo "<div class='error'>Item deleted.</div>";
 }
 ?>
@@ -72,14 +72,14 @@ if(isset($_POST['confirm_delete_other'])) {
 			"font-size: 10pt;"); ?>
     <input type="submit" value="Open Account" name="submit_open_account" />
 </form>
-<?php } else { 
+<?php } else {
 			if(!$_POST['idnum']){
-				$en = mysql_query("SELECT * FROM stud_enrol WHERE enrol_id={$_POST['enrol_id']}");
+				$en = mysqli_query($db, "SELECT * FROM stud_enrol WHERE enrol_id={$_POST['enrol_id']}");
 			}else{
-				$en = mysql_query("SELECT * FROM stud_enrol WHERE idnum={$_POST['idnum']} AND sem_code={$_SESSION['sem_code']}");
+				$en = mysqli_query($db, "SELECT * FROM stud_enrol WHERE idnum={$_POST['idnum']} AND sem_code={$_SESSION['sem_code']}");
 			}
-			
-			$enr = mysql_fetch_assoc($en);
+
+			$enr = mysqli_fetch_assoc($en);
 			$idnum = $enr['idnum'];
 			$enrol_id = $enr['enrol_id'];
 
@@ -92,10 +92,10 @@ if(isset($_POST['confirm_delete_other'])) {
 			$energy = getAccountItem($enrol_id, 'Energy Fee');
 			$old = getAccountItem($enrol_id, 'Old Account');
 			$other = getOtherFees($enrol_id) + $rle + $aff + $sem + $energy;
-			
+
 			$rate = getRate($enrol_id, $idnum);
 			$tuition = $pay_units * $rate;
-			
+
 			$total = $tuition + $other + $misc + $lab_fees;
 			$entrance = getEntrance($idnum,$_SESSION['sem_code'])-100;
 			$bal = $total - $entrance;
@@ -114,12 +114,12 @@ if(isset($_POST['confirm_delete_other'])) {
             <tr><th>Course & Year:</th><td><?php echo getCourseAndYear($idnum, $_SESSION['sem_code']);?></td></tr>
             <tr><td colspan="2">&nbsp;</td></tr>
             <tr>
-            	<th align="left">Tuition Fee: 
+            	<th align="left">Tuition Fee:
 					<?php echo $pay_units ; ?> @ <input type="text" name="rate" style="width: 50px;" value="<?php echo $rate; ?>" />
                 </th>
                 <td align="right">
                 	<input type="text" name="tuition" style=" text-align:right; width: 100px;" readonly="readonly"
-                   		value="<?php echo $tuition; ?>"/>
+            			value="<?php echo $tuition; ?>"/>
                 </td>
             </tr>
             <tr><th align="left">Miscellaneous Fee:</th>
@@ -129,8 +129,8 @@ if(isset($_POST['confirm_delete_other'])) {
                     	value="<?php echo $misc; ?>"/></td></tr>
             <tr><th align="left">Laboratory Fees:</th>
             	<td align="right"><input type="text" name="lab_fee" style=" text-align:right; width: 100px;" readonly="readonly"
-                   	value="<?php echo $lab_fees; ?>"/></td></tr>
-            
+                	value="<?php echo $lab_fees; ?>"/></td></tr>
+
             <tr><th align="left">Old Account:</th>
             	<td align="right"><input type="hidden" name="acct_name[]" value="old" />
                 	<input type="text" name="acct_amount[]" style=" text-align:right; width: 100px;" 
@@ -139,7 +139,7 @@ if(isset($_POST['confirm_delete_other'])) {
                 <th align="left">Others:</th>
             	<td valign="top"><input type="text" name="others" style=" text-align:right; width: 100px;" 
                     	value="<?php echo $other; ?>" readonly="readonly" /></td></tr>
-            
+
             <tr><th align="left">TOTAL</th><td align="right"><strong><?php printf("%.2f",$total);?></strong></td></tr>
             <tr><th align="left">LES: Entrance Fee</th><td align="right"><strong><?php printf("%.2f",$entrance);?></strong></td></tr>
             <tr><th align="left">BALANCE</th><td align="right"><strong><?php printf("%.2f",$bal);?></strong></td></tr>
@@ -153,12 +153,12 @@ if(isset($_POST['confirm_delete_other'])) {
             	<th>#</th><th>Class Code:</th><th>Subject:</th><th>Cr Units:</th><th>Pay Units:</th>
             </tr>
 <?php
-	$sub = mysql_query("SELECT class_code, name, cunits, punits FROM subjects s, class c
-					   WHERE s.sub_code=c.sub_code AND c.class_code IN 
-					   (SELECT class_code FROM sub_enrol WHERE idnum=$idnum AND sem_code={$_SESSION['sem_code']})");
+	$sub = mysqli_query($db, "SELECT class_code, name, cunits, punits FROM subjects s, class c
+					WHERE s.sub_code=c.sub_code AND c.class_code IN
+					(SELECT class_code FROM sub_enrol WHERE idnum=$idnum AND sem_code={$_SESSION['sem_code']})");
 	$n=1;
 	$total_punits = 0;
-	while($subr=mysql_fetch_assoc($sub)) { 
+	while($subr=mysqli_fetch_assoc($sub)) {
 		$total_punits+=$subr['punits'];
 ?>
 			<tr>
@@ -188,9 +188,9 @@ Account Title: <input type="text" name="acct_name" /> &nbsp; Amount: <input type
         <th width="40">&nbsp;</th>
     </tr>
 <?php 
-	$oth_acc = mysql_query("SELECT * FROM acct_item WHERE enrol_id=$enrol_id AND acct_title 
+	$oth_acc = mysqli_query($db, "SELECT * FROM acct_item WHERE enrol_id=$enrol_id AND acct_title
 	        NOT IN ('misc','old')");
-	while($oth_accr=mysql_fetch_assoc($oth_acc)){ ?>
+	while($oth_accr=mysqli_fetch_assoc($oth_acc)){ ?>
 	<tr>
     	<td><?php echo $oth_accr['acct_title'];?></td>
         <td align="right"><?php echo $oth_accr['amount'];?></td>
@@ -217,10 +217,10 @@ Account Title: <input type="text" name="acct_name" /> &nbsp; Amount: <input type
             <th width="200">Title:</th>
             <th width="100">Amount</th>
         </tr>
-	<?php $pm = mysql_query("SELECT p.*, c.acct_title FROM payments p, chart_of_accts c 
+	<?php $pm = mysqli_query($db, "SELECT p.*, c.acct_title FROM payments p, chart_of_accts c 
 							WHERE p.acct_no = c.acct_code AND
 							idnum=$idnum AND sem_code={$_SESSION['sem_code']} ORDER BY date"); ?>
-    <?php while($pmr=mysql_fetch_assoc($pm)) { ?>
+    <?php while($pmr=mysqli_fetch_assoc($pm)) { ?>
     	<tr>
         	<td><?php echo $pmr['date'];?></td>
             <td><?php echo $pmr['orno'];?></td>

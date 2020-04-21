@@ -4,8 +4,8 @@
 if(isset($_GET['c'], $_GET['v'])){
 	$code = $_GET['c'];
 	$val = $_GET['v'];
-	mysql_query("UPDATE class SET punits=$val WHERE class_code=$code");
-	if(mysql_error()) echo mysql_error();
+	mysqli_query($db, "UPDATE class SET punits=$val WHERE class_code=$code");
+	if(mysqli_error($db)) echo mysqli_error($db);
 	else echo "&radic;";
 }else{
 	echo "Error!";

@@ -2,19 +2,20 @@
 include("library/singles.php");
 
 function createProspectus($prp_code){
-	$pros = mysql_query("SELECT cr_num, courses.course, year FROM prospectus, courses
+	global $db;
+	$pros = mysqli_query($db, "SELECT cr_num, courses.course, year FROM prospectus, courses
 						WHERE prospectus.course=courses.cr_num AND prp_code=$prp_code");
-	$prow = mysql_fetch_assoc($pros);
+	$prow = mysqli_fetch_assoc($pros);
 	echo "<p align='center'>Mater Dei College<br />Tubigon, Bohol</p>";
 	echo "<p align='center'><strong>Prospectus / Curriculum</strong> <br />";
 	echo $prow['course'];
 	echo "<br />(" . $prow['year'] . ")</p>";
-	
-	$sems = mysql_query("SELECT DISTINCT semyr FROM pros_subj WHERE prp_code=$prp_code ORDER BY semyr");
+
+	$sems = mysqli_query($db, "SELECT DISTINCT semyr FROM pros_subj WHERE prp_code=$prp_code ORDER BY semyr");
 	$sem = array(1=>"First Semester",2=>"Second Semester",3=>"Summer");
 	$yrs = array(1=>"First Year",2=>"Second Year",3=>"Third Year",4=>"Fourth Year",5=>"Fifth Year");
-	
-	while($sy = mysql_fetch_row($sems)) {
+
+	while($sy = mysqli_fetch_row($sems)) {
 		$semyear = $yrs[substr($sy[0],0,1)] . "-" . $sem[substr($sy[0],1,1)];
 		echo "<div style='border: 0px;'>";
 		echo "<span style='display: block; font-weight: bold;'>$semyear</span>";
@@ -25,15 +26,15 @@ function createProspectus($prp_code){
 					<td width='50' align='center'>Units:</td>
 					<td width='50' align='center'>&nbsp;</td>
 				</tr>";
-		
-		$psub = mysql_query("SELECT pros_subj.sub_code, name, descript, c_units FROM pros_subj, subjects
+
+		$psub = mysqli_query($db, "SELECT pros_subj.sub_code, name, descript, c_units FROM pros_subj, subjects
 				WHERE pros_subj.sub_code=subjects.sub_code
 				AND prp_code=$prp_code
 				AND semyr={$sy[0]}");
 		$tunits=0;
-		while($psrow=mysql_fetch_assoc($psub)) {
+		while($psrow=mysqli_fetch_assoc($psub)) {
 			echo "<tr>
-				  	<td>{$psrow['name']}</td>
+					<td>{$psrow['name']}</td>
 					<td>{$psrow['descript']}</td>
 					<td align='center'>{$psrow['c_units']}</td>
 					<td align='center'>
@@ -46,7 +47,7 @@ function createProspectus($prp_code){
 								class='noprint'/>
 						</form>
 					</td>
-				  </tr>";
+				</tr>";
 			$tunits+=$psrow['c_units'];
 		}
 		echo "<tr><td colspan='2'>TOTAL UNITS:</td><td align='center'>$tunits</td><td>&nbsp;</td></tr>";
@@ -56,20 +57,21 @@ function createProspectus($prp_code){
 }
 
 function showEvaluation($idnum, $prp_code) {
-	$pros = mysql_query("SELECT cr_num, courses.course, year FROM prospectus, courses
+	global $db;
+	$pros = mysqli_query($db, "SELECT cr_num, courses.course, year FROM prospectus, courses
 						WHERE prospectus.course=courses.cr_num AND prp_code=$prp_code");
-	$prow = mysql_fetch_assoc($pros);
+	$prow = mysqli_fetch_assoc($pros);
 	echo "<p align='center'>Mater Dei College<br />Tubigon, Bohol</p>";
 	echo "<p align='center'><strong>EVALUATION</strong> <br />";
 	echo getFullName($idnum) . "<br />";
 	echo $prow['course'];
 	echo "<br />(" . $prow['year'] . ")</p>";
-	
-	$sems = mysql_query("SELECT DISTINCT semyr FROM pros_subj WHERE prp_code=$prp_code ORDER BY semyr");
+
+	$sems = mysqli_query($db, "SELECT DISTINCT semyr FROM pros_subj WHERE prp_code=$prp_code ORDER BY semyr");
 	$sem = array(1=>"First Semester",2=>"Second Semester",3=>"Summer");
 	$yrs = array(1=>"First Year",2=>"Second Year",3=>"Third Year",4=>"Fourth Year",5=>"Fifth Year");
-	
-	while($sy = mysql_fetch_row($sems)) {
+
+	while($sy = mysqli_fetch_row($sems)) {
 		$semyear = $yrs[substr($sy[0],0,1)] . "-" . $sem[substr($sy[0],1,1)];
 		echo "<div style='border: 0px;'>";
 		echo "<span style='display: block; font-weight: bold;'>$semyear</span>";
@@ -80,31 +82,32 @@ function showEvaluation($idnum, $prp_code) {
 					<td width='50' align='center'>Units:</td>
 					<td width='50' align='center'>Rating:</td>
 				</tr>";
-		
-		$psub = mysql_query("SELECT pros_subj.sub_code, name, descript, c_units FROM pros_subj, subjects
+
+		$psub = mysqli_query($db, "SELECT pros_subj.sub_code, name, descript, c_units FROM pros_subj, subjects
 				WHERE pros_subj.sub_code=subjects.sub_code
 				AND prp_code=$prp_code
 				AND semyr={$sy[0]}");
-		while($psrow=mysql_fetch_assoc($psub)) {
+		while($psrow=mysqli_fetch_assoc($psub)) {
 			echo "<tr>
-				  	<td>{$psrow['name']}</td>
+					<td>{$psrow['name']}</td>
 					<td>{$psrow['descript']}</td>
 					<td align='center'>{$psrow['c_units']}</td>
 					<td align='center'>" .
 						getRating($idnum,$psrow['sub_code'])
 					. "</td>
-				  </tr>";
+					</tr>";
 		}
-		
+
 		echo "</table>";
 		echo "</div>";
 	}
 }
 
 function getRating($idnum, $sub_code) {
-	$rt = mysql_query("SELECT rating FROM sub_enrol WHERE idnum=$idnum AND sub_code=$sub_code");
-	if(mysql_num_rows($rt)==1) {
-		$rtr = mysql_fetch_row($rt);
+	global $db;
+	$rt = mysqli_query($db, "SELECT rating FROM sub_enrol WHERE idnum=$idnum AND sub_code=$sub_code");
+	if(mysqli_num_rows($rt)==1) {
+		$rtr = mysqli_fetch_row($rt);
 		if(empty($rtr[0])) return "*";
 		else return $rtr[0];
 	}else {

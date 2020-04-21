@@ -1,9 +1,10 @@
 <?php
 function PageLimit($sql, $pageName, $rows){
-	$scount = mysql_query($sql);
-	$scountr=mysql_fetch_row($scount);
+	global $db;
+	$scount = mysqli_query($db, $sql);
+	$scountr=mysqli_fetch_row($scount);
 	$pages = ($scountr[0]/$rows) + 1;
-	
+
 	if(isset($_GET['pagenum'])){
 		echo "<center><span><a href='index.php?page=$pageName&pagenum=";
 		if($_GET['pagenum']==1) echo "1"; else echo ($_GET['pagenum']-1);
