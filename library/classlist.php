@@ -1,4 +1,4 @@
-<?php function showClassList($class_code){ ?>
+<?php function showClassList($class_code){ global $db; ?>
 
 <table>
 	<tr>

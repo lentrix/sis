@@ -97,7 +97,7 @@ function compute_weighted_average($ratings, $units)
                 $ogwt += $swa;
             }
             ?>
-            Overal Weighted Average: <?= $ogwt / $semCount; ?>
+            Overal Weighted Average: <?= is_numeric($ogwt) ? $ogwt / $semCount : "-"; ?>
         </p>
     <?php } ?>
 <?php } ?>
