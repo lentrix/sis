@@ -19,7 +19,7 @@
     <td class="thead" width="5%">Pay Unit:</td>
     <td class="thead" width="5%">Num:</td>
 </tr>
-<?php while($row=mysql_fetch_assoc($list)) : ?>
+<?php while($row=mysqli_fetch_assoc($list)) : ?>
 <tr>
     <td class="tcel" width="20%"><?php echo $row['teacher'];?></td>
     <td class="tcel" width="10%"><?php echo $row['name'];?></td>
