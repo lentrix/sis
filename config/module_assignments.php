@@ -3,12 +3,12 @@ $modules['enrolment'] = array("home","profile","student","enrol","subjects","lis
 	"semesters","view_edit_student","view_edit_subject","datasets","classes","view_edit_class","student_grades",
 	"enrolment_report","faculty_report","enrolist","transcript","graduates_report",
 	"drop_out_filter","prospectus","prospectus_builder","view_edit_prospectus",
-	"student_subjects_selector","promo_rep");
+	"student_subjects_selector","promo_rep","transcript_view");
 $modules['deans'] = array("home","profile","view_student","subjects","view_edit_subject",
 	"classes","prospectus","view_edit_class","teachers","student_subjects",
 	"view_teacher_classes","prospectus_builder","view_edit_prospectus",
         "evaluation","class_transfer","listings","rooms",
-        "deans_list","exam_sched","drop_out_filter","student_grades","transcript");
+        "deans_list","exam_sched","drop_out_filter","student_grades","transcript","transcript_view");
 $modules['billing'] = array("home","profile","ledger","passbook","view_student", "payunits","edit_payment",
 	"accounts","payments","lab_fees","fees_gen","listings","class_density","units_report","stud_payments",
     "teachers_load_finance","icl","class_time_summary");

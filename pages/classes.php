@@ -219,7 +219,7 @@ else {
 			<?php
 			$class_list = mysqli_query($db, $sequel);
 
-			while ($class_row = mysqli_fetch_assoc($db, $class_list)) {   ?>
+			while ($class_row = mysqli_fetch_assoc($class_list)) {   ?>
 				<tr>
 					<td class="tcel">
 						<a href="index.php?page=view_edit_class&class_code=<?php echo $class_row['class_code']; ?>" style="font-size: 9pt; text-decoration: none;font-weight:bold" title="<?php echo $class_row['name']; ?>">

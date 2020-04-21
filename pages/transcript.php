@@ -1,103 +1,61 @@
-<?php
-include("library/lister.php");
+<?php 
 
-function printTranscript($idnum, $sem_code)
-{
-    global $db;
-    $rc = mysqli_query($db, "SELECT s.name, s.descript, se.rating, c.cunits
-        FROM subjects s, sub_enrol se, class c, stud_enrol st
-        WHERE s.sub_code=c.sub_code
-        AND se.class_code=c.class_code
-        AND se.idnum=st.idnum
-        AND se.sem_code=c.sem_code
-        AND se.sem_code=st.sem_code
-        AND se.sem_code=$sem_code
-        AND st.idnum=$idnum");
-    return $rc;
-}
+include("library/singles.php");
 
-function compute_weighted_average($ratings, $units)
-{
-    if (in_array("-", $ratings) || in_array("dr.", $ratings) || in_array("wd", $ratings) || in_array("NaN", $ratings)) {
-        return "-";
-    } else {
-        $weightedRating = 0;
-        $sumOfWeights = 0;
-        for ($i = 0; $i < count($ratings); $i++) {
-            $weightedRating += $ratings[$i] * $units[$i];
-            $sumOfWeights += $units[$i];
-        }
-        return ($sumOfWeights > 0) ? $weightedRating / $sumOfWeights : 'n/a';
-    }
-}
 ?>
+
 
 <h1>Transcript Generator</h1>
 
-<?php if (!isset($_POST['idnum'])) { ?>
-    <form method="post" action="">
-        <?php $sql = "SELECT idnum, CONCAT(lname, ', ', fname, ' ', mi) AS 'name' 
-        FROM stud_info ORDER BY lname"; ?>
-        <?php CreateList("idnum", "idnum", "name", "$sql", "", false); ?>
-        <input type="submit" name="transcript" value="Go" />
-    </form>
+<?php if(!isset($_POST['submit'])): ?>
 
-<?php } else { ?>
-    <form method="post" action="" style="float: right">
-        <input type="submit" value="X" />
-    </form>
-    <?php $info = mysqli_query($db, "SELECT CONCAT(lname,', ',fname,' ',mi) AS 'name' 
-        FROM stud_info WHERE idnum={$_POST['idnum']}"); ?>
-    <?php $inr = mysqli_fetch_assoc($info); ?>
-    <h2 align="center">Transcript of Records</h2>
-    <p><strong>Name: </strong><?php echo $inr['name']; ?></p>
-    <hr />
+<form action="" method="post">
+    <label for="idNumber">Enter ID Number</label>
+    <input type="text" name="idNumber" id="idNumber">
+    <button type="submit" name="submit">Get Transcript</button>
+</form>
 
-    <?php $sems = mysqli_query($db, "SELECT s.*, c.course  FROM sems s, stud_enrol se, courses c
-        WHERE s.sem_code=se.sem_code
-        AND se.course=c.cr_num
-        AND se.idnum={$_POST['idnum']}"); ?>
-    <?php echo mysqli_error($db); ?>
-    <?php $ogwt = 0;
-    $semCount = 0; ?>
-    <?php while ($sr = mysqli_fetch_assoc($sems)) { ?>
+<?php else : include("transcript_generator.php"); ?>
+    <span style="float: right">
+        <form action="" method="post">
+            <button type="submit">X</button>
+        </form>
+    </span>
+    <div>
+        <strong>Name</strong> <?= getFullName($id); ?>
+    </div>
 
-        <p><strong><?php echo $sr['sem'] . ", MATER DEI COLLEGE, Tubigon, Bohol"; ?></strong></p>
-        <?php $rec = printTranscript($_POST['idnum'], $sr['sem_code']); ?>
-        <table style="border-collapse: collapse">
-            <?php $ratings = [];
-            $units_array = []; ?>
-            <?php while ($rrow = mysqli_fetch_assoc($rec)) { ?>
+    <?php $sems = $db->query("SELECT * FROM transcript_sem WHERE idnum=$id ORDER BY ordinal"); ?>
+    <?php while($sem = mysqli_fetch_object($sems)) : ?>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead>
                 <tr>
-                    <td width="150"><?php echo $rrow['name']; ?></td>
-                    <td>&nbsp;</td>
-                    <td width="400"><?php echo $rrow['descript']; ?></td>
-                    <td width="100"><?php echo $rrow['rating']; ?></td>
-                    <?php if (
-                        $rrow['rating'] > 3.0 || $rrow['rating'] == '-' ||
-                        $rrow['rating'] == 'dr' || $rrow['rating'] == 'wd' ||
-                        empty($rrow['rating']) || $rrow['rating'] == "NaN"
-                    ) {
-                        $units = 0;
-                    } else $units = $rrow['cunits']; ?>
-                    <td>&nbsp;</td>
-                    <td width="100"><?php echo $units; ?></td>
+                    <th colspan="4" class="right">
+                        <button style="font-size: 0.9em">Insert Before</button>
+                        <button style="font-size: 0.9em">Insert After</button>
+                        <button style="font-size: 0.9em">Move Down</button>
+                        <button style="font-size: 0.9em">Move Up</button>
+                    </th>
                 </tr>
-                <?php $ratings[] = $rrow['rating'];
-                $units_array[] = $units; ?>
-            <?php } ?>
+                <tr>
+                    <th class="thead left" style="font-size: 1.1em" colspan="4"><?= $sem->sy ?>, <?= $sem->school ?>, <?= $sem->address ?> - <?= $sem->program ?></th>
+                </tr>
+                <tr>
+                    <th class="thead left">Course No.:</th>
+                    <th class="thead left">Description:</th>
+                    <th class="thead">Rating:</th>
+                    <th class="thead">Units:</th>
+                </tr>
+            </thead>
+            <?php $rows = $db->query("SELECT * FROM transcript_row WHERE transcript_sem_id=$sem->id"); ?>
+            <?php while($row = mysqli_fetch_object($rows)) : ?>
+                <tr>
+                    <td class="tcel"><?= $row->course ?></td>
+                    <td class="tcel"><?= $row->description ?></td>
+                    <td class="tcel center"><?= $row->rating ?></td>
+                    <td class="tcel center"><?= $row->units ?></td>
+                </tr>
+            <?php endwhile; ?>
         </table>
-        <p>
-            Semestral Weighted Average: <?= $swa = compute_weighted_average($ratings, $units_array) ?> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <?php
-            $semCount++;
-            if ($swa === "-" || $ogwt === "-") {
-                $ogwt = "-";
-            } else {
-                $ogwt += $swa;
-            }
-            ?>
-            Overal Weighted Average: <?= is_numeric($ogwt) ? $ogwt / $semCount : "-"; ?>
-        </p>
-    <?php } ?>
-<?php } ?>
+    <?php endwhile; ?>
+<?php endif; ?>

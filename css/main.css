@@ -333,3 +333,15 @@ body{
 	padding-left: 3px;
 	padding-right: 3px;
 }
+
+.right {
+	text-align: right !important;
+}
+
+.center {
+	text-align: center !important;
+}
+
+.left {
+	text-align: left !important;
+}
