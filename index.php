@@ -6,8 +6,9 @@
 	}
 	include("config/dbc.php");
 	function getSemester($sem_code){
-		$sem=mysql_query("SELECT sem FROM sems WHERE sem_code=$sem_code");
-		$semr=mysql_fetch_row($sem);
+		global $db;
+		$sem=mysqli_query($db, "SELECT sem FROM sems WHERE sem_code=$sem_code");
+		$semr=mysqli_fetch_row($sem);
 		echo $semr[0];
 	}
 ?>
@@ -55,7 +56,7 @@ function checkValue(total, score){
 	<div id="logo"></div>
 	
     <div id="title">
-    	<h2>Mater Dei College <br/ >Student Information System</h2>
+    	<h2>Mater Dei College <br>Student Information System</h2>
     </div>
 	<div id="sem">
 		<?php if(isset($_SESSION['sem_code'])) getSemester($_SESSION['sem_code']);?>
@@ -65,8 +66,8 @@ function checkValue(total, score){
     <div id="college">
 	<?php 
 	if(isset($_SESSION['clg_no'])){
-		$cg = mysql_query("SELECT college, acrnm FROM colleges WHERE clg_no={$_SESSION['clg_no']}");
-		$cgr=mysql_fetch_assoc($cg);
+		$cg = mysqli_query($db, "SELECT college, acrnm FROM colleges WHERE clg_no={$_SESSION['clg_no']}");
+		$cgr=mysqli_fetch_assoc($cg);
 		echo $cgr['college'] . "(" . $cgr['acrnm'] . ")";
 	}
 	?>
@@ -86,8 +87,8 @@ function checkValue(total, score){
 			echo "<div id='widget_area'>";
 			include("widgets/user_widget.php");
 			include("config/module_assignments.php");
-			$md = mysql_query("SELECT * FROM modules NATURAL JOIN modassgn WHERE user='{$_SESSION['user']}'");
-			while($mdr=mysql_fetch_assoc($md)){
+			$md = mysqli_query($db, "SELECT * FROM modules NATURAL JOIN modassgn WHERE user='{$_SESSION['user']}'");
+			while($mdr=mysqli_fetch_assoc($md)){
 				if(file_exists("widgets/" . $mdr['module'] . "_widget.php"))
 					include("widgets/" . $mdr['module'] . "_widget.php");
 				foreach($modules[$mdr['module']] as $pages_assigned)	{
@@ -117,7 +118,7 @@ function checkValue(total, score){
 	?>
 </div>
 <div id="footer1">
-	Copyright &copy; 2011. Mater Dei College<br/ >
+	Copyright &copy; 2011. Mater Dei College<br>
     Tubigon, Bohol, Philippines.<br/>
     <span style="float: right; color: #333; font-size: 9pt; margin-right: 10px;font-style: oblique">Developed by: Benjie B. Lenteria</span>
 </div>

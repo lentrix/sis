@@ -3,12 +3,13 @@
 
 <?php
 function getSubjects($idnum){
+   global $db;
    $subjects['names']="";
    $subjects['tunits']=0;
-   $sbs = mysql_query("SELECT s.name, c.cunits FROM subjects s, sub_enrol se, class c
+   $sbs = mysqli_query($db, "SELECT s.name, c.cunits FROM subjects s, sub_enrol se, class c
          WHERE s.sub_code = c.sub_code AND se.class_code = c.class_code
          AND se.idnum=$idnum AND se.sem_code={$_SESSION['sem_code']}");
-   while($sbr=mysql_fetch_row($sbs)){
+   while($sbr=mysqli_fetch_row($sbs)){
       $subjects['names'] .= $sbr[0] . ", ";
       $subjects['tunits'] += $sbr[1];
    }
@@ -18,9 +19,10 @@ function getSubjects($idnum){
 
 <?php
 function getYears($cr_num){
-   $yrs = mysql_query("SELECT DISTINCT year FROM stud_enrol WHERE sem_code={$_SESSION['sem_code']} AND course=$cr_num");
+   global $db;
+   $yrs = mysqli_query($db, "SELECT DISTINCT year FROM stud_enrol WHERE sem_code={$_SESSION['sem_code']} AND course=$cr_num");
    $years = array();
-   while($yr=mysql_fetch_row($yrs)) {
+   while($yr=mysqli_fetch_row($yrs)) {
       $years[] = $yr[0];
    }
    return $years;
@@ -28,17 +30,17 @@ function getYears($cr_num){
 ?>
 
 <?php function createEnrolist($course, $year, $n){ ?>
-  
+   <?php global $db; ?>
       <?php
-      $stud = mysql_query("SELECT st.idnum, st.lname, st.fname, st.mi, c.cr_acrnm, se.year, st.gender
+      $stud = mysqli_query($db, "SELECT st.idnum, st.lname, st.fname, st.mi, c.cr_acrnm, se.year, st.gender
             FROM stud_info st, courses c, stud_enrol se
             WHERE st.idnum=se.idnum AND se.course=c.cr_num
             AND se.en_status <> 'withdrawn' 
             AND c.cr_num=$course AND se.year='$year'
             AND se.sem_code={$_SESSION['sem_code']}
             ORDER BY lname, fname ASC");
-      if(mysql_error()) echo mysql_error();
-      while($stdr=mysql_fetch_assoc($stud)) {
+      if(mysqli_error($db)) echo mysqli_error($db);
+      while($stdr=mysqli_fetch_assoc($stud)) {
       ?>
       
       <tr>
@@ -85,13 +87,13 @@ function getYears($cr_num){
 
 $courses = array();
 
-$crs_list = mysql_query("SELECT DISTINCT s.course, cr_acrnm FROM stud_enrol s, courses c
+$crs_list = mysqli_query($db, "SELECT DISTINCT s.course, cr_acrnm FROM stud_enrol s, courses c
         WHERE s.course=c.cr_num 
         AND sem_code={$_SESSION['sem_code']}
         ORDER BY c.cr_acrnm");
-echo mysql_error();
+echo mysqli_error($db);
 $n=1;
-while($cr = mysql_fetch_row($crs_list)){
+while($cr = mysqli_fetch_row($crs_list)){
    $years = getYears($cr[0]);
    
    foreach($years as $y){

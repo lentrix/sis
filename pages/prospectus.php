@@ -6,15 +6,15 @@
 
 <div>
 <?php
-$mods = mysql_query("SELECT * FROM modassgn WHERE user='{$_SESSION['user']}' AND modlno=1");
-if(mysql_num_rows($mods)!=1) $college_filter = "AND courses.clg_no={$_SESSION['clg_no']}";
+$mods = mysqli_query($db, "SELECT * FROM modassgn WHERE user='{$_SESSION['user']}' AND modlno=1");
+if(mysqli_num_rows($mods)!=1) $college_filter = "AND courses.clg_no={$_SESSION['clg_no']}";
 else $college_filter="";
 
-$pr = mysql_query("SELECT prp_code, courses.course, prospectus.year FROM prospectus, courses
+$pr = mysqli_query($db, "SELECT prp_code, courses.course, prospectus.year FROM prospectus, courses
 		WHERE prospectus.course=courses.cr_num
 		$college_filter ORDER BY course");
 echo "<table>";
-while($prow=mysql_fetch_assoc($pr)) {
+while($prow=mysqli_fetch_assoc($pr)) {
 	echo "<tr><td width='350'>{$prow['course']}</td>
 			<td width='50'>{$prow['year']}</td>
 			<td width='50'>
