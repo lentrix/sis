@@ -6,7 +6,7 @@ if (!$db->query("DELETE FROM transcript_sem WHERE type='int'")) {
 }
 
 //generate transcript data..
-$id = $_POST['idNumber'];
+$id = $_GET['idNumber'];
 
 $enrolsSQL = mysqli_query($db, "SELECT se.enrol_id, sm.sem, sm.sem_code, cr.cr_acrnm, se.year FROM stud_enrol se
     LEFT JOIN courses cr ON cr.cr_num=se.course
@@ -57,5 +57,5 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
         if (mysqli_error($db)) die(mysqli_error($db) . " == " . $rating);
     }
 
-    $ord = $ord + 15;
+    $ord = $ord + 500;
 }//while $enrols

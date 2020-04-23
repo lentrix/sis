@@ -110,4 +110,10 @@ function getClassDescription($class_code){
     if($row) return $row[0];
     else return 'not found.';
 }
+
+function getTranscriptSemName($semId) {
+	global $db;
+	$data = $db->query("SELECT sy FROM transcript_sem WHERE id=$semId");
+	return $data->fetch_assoc()['sy'];
+}
 ?>

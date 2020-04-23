@@ -1,25 +1,35 @@
-<?php 
+<?php
 
 include("library/singles.php");
+include("library/transcript_functions.php");
+
+//move down
+if(isset($_POST['moveDown'])) {
+    moveDown($_POST['semId']);
+}
+
+//move Up
+if(isset($_POST['moveUp'])) {
+    moveUp($_POST['semId']);
+}
 
 ?>
 
 
 <h1>Transcript Generator</h1>
 
-<?php if(!isset($_POST['submit'])): ?>
+<?php if(!isset($_GET['idNumber'])): ?>
 
-<form action="" method="post">
+<form action="" method="get">
     <label for="idNumber">Enter ID Number</label>
     <input type="text" name="idNumber" id="idNumber">
+    <input type="hidden" name="page" value="transcript">
     <button type="submit" name="submit">Get Transcript</button>
 </form>
 
 <?php else : include("transcript_generator.php"); ?>
     <span style="float: right">
-        <form action="" method="post">
-            <button type="submit">X</button>
-        </form>
+        <button type="button" onClick="window.location='index.php?page=transcript'">X</button>
     </span>
     <div>
         <strong>Name</strong> <?= getFullName($id); ?>
@@ -31,10 +41,20 @@ include("library/singles.php");
             <thead>
                 <tr>
                     <th colspan="4" class="right">
-                        <button style="font-size: 0.9em">Insert Before</button>
-                        <button style="font-size: 0.9em">Insert After</button>
-                        <button style="font-size: 0.9em">Move Down</button>
-                        <button style="font-size: 0.9em">Move Up</button>
+                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_insert&direction=above&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Insert Before</button>
+                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_insert&direction=below&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Insert After</button>
+                        <form action="" method="post" style="display: inline">
+                            <input type="hidden" name="semId" value="<?= $sem->id ?>">
+                            <button style="font-size: 12px" name="moveDown" type="submit">Move Down</button>
+                        </form>
+                        <form action="" method="post" style="display: inline">
+                            <input type="hidden" name="semId" value="<?= $sem->id ?>">
+                            <button style="font-size: 12px" name="moveUp" type="submit">Move Up</button>
+                        </form>
+                        <?php if($sem->type=='ext'): ?>
+                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_edit&sem=<?= $sem->id ?>'">Edit</button>
+                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_delete&sem=<?= $sem->id ?>'">Delete</button>
+                        <?php endif; ?>
                     </th>
                 </tr>
                 <tr>
