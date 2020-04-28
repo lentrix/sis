@@ -59,3 +59,11 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
 
     $ord = $ord + 500;
 }//while $enrols
+
+
+//create if not exists transcript_details
+$transcript_details = $db->query("SELECT * FROM transcript_details WHERE idnum=$id")->fetch_object();
+
+if(!$transcript_details) {
+    $db->query("INSERT INTO transcript_details (idnum) VALUES ($id)");
+}
