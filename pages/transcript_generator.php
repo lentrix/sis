@@ -43,7 +43,7 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
 
     while ($classes = mysqli_fetch_object($classesSQL)) {
         $rating = is_numeric($classes->rating) ? $classes->rating : 'null';
-        $units = is_numeric($classes->cunits) ? $classes->cunits : 'null';
+        $units = (is_numeric($classes->cunits) && (is_numeric($classes->rating) && $classes->rating<=3.0) ) ? $classes->cunits : 0;
         mysqli_query($db, "INSERT INTO transcript_row (
             `transcript_sem_id`, `course`, `description`, `rating`,`units`
         ) VALUES (

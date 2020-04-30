@@ -67,3 +67,13 @@ function moveUp($transcriptSemId) {
     }
 }
 
+function getSems($idNum) {
+    global $db;
+    return $db->query("SELECT * FROM transcript_sem WHERE idnum=$idNum ORDER BY ordinal")->fetch_all(MYSQLI_ASSOC);
+}
+
+function getSemRows($semId) {
+    global $db;
+    return $db->query("SELECT * FROM transcript_row WHERE transcript_sem_id=$semId")->fetch_all(MYSQLI_ASSOC);
+}
+

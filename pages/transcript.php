@@ -18,6 +18,7 @@ if (isset($_POST['save_details'])) {
     $place_of_birth = $_POST['place_of_birth'];
     $nationality = $_POST['nationality'];
     $guardians = $_POST['guardians'];
+    $religion = $_POST['religion'];
     $gd_address = $_POST['gd_address'];
     $dt_admitted = $_POST['dt_admitted'];
     $entrance_data = $_POST['entrance_data'];
@@ -33,13 +34,16 @@ if (isset($_POST['save_details'])) {
     $tcry = $_POST['tcry'];
     $tcry_sy = $_POST['tcry_sy'];
 
+    $year = date('Y');
+
     $db->query("UPDATE transcript_details SET
         place_of_birth='$place_of_birth', nationality='$nationality', guardians='$guardians',
         gd_address='$gd_address', dt_admitted='$dt_admitted',
-        entrance_data='$entrance_data', college='$college',
+        entrance_data='$entrance_data', college='$college', religion='$religion',
         orno='$orno', or_date='$or_date', remarks='$remarks',
         date_issued='$date_issued', elem='$elem', elem_sy='$elem_sy',
-        secn='$secn', secn_sy='$secn_sy', tcry='$tcry', tcry_sy='$tcry_sy'
+        secn='$secn', secn_sy='$secn_sy', tcry='$tcry', tcry_sy='$tcry_sy',
+        revised=$year
         WHERE idnum=$idnum");
 
     if (mysqli_error($db)) {

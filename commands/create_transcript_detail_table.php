@@ -21,7 +21,8 @@ $db->query("CREATE TABLE transcript_details (
     `secn` VARCHAR(60),
     `secn_sy` VARCHAR(10),
     `tcry` VARCHAR(60),
-    `tcry_sy` VARCHAR(10)
+    `tcry_sy` VARCHAR(10),
+    `revised` INTEGER(4)
 )");
 
 if (mysqli_error($db)) {

@@ -21,17 +21,17 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(105, 10, "OR. No.: $details->orno", 0, 0, 'L');
         $this->Cell(0, 10, "Date Issued: " . date('F d, Y', strtotime($details->or_date)), 0, 0, 'R');
-        $this->Ln(10);
+        $this->Ln(8);
         $this->Cell(40, 10, "REMARKS:", 0, 0, 'L');
         $this->Cell(0, 10, $details->remarks, 0, 0, 'L');
         $this->Ln(5);
         $this->Cell(40, 10, "Date Issued:", 0, 0, 'L');
         $this->Cell(0, 10, date('F d, Y', strtotime($details->date_issued)), 0, 0, 'L');
-        $this->Ln(10);
+        $this->Ln(8);
         $this->Cell(0, 10, "Not Valid Without", 0, 0, 'L');
         $this->Ln(5);
         $this->Cell(0, 10, "MDC Seal", 0, 0, 'L');
-        $this->Ln(10);
+        $this->Ln(8);
         $this->Cell(135, 10, 'Page ' . $this->PageNo() . " of {nb} pages", 0, 0, 'L');
         $this->Cell(0, 10, "JOSE RUEL B. ALAMPAYAN", 0, 0, 'C');
         $this->Ln(5);
@@ -43,10 +43,14 @@ class PDF extends FPDF
     {
         global $stInfo;
         global $details;
-        
+
         $this->AddPage();
-        $this->SetFont('Arial', 'B', 12);
+        $this->SetFont('Arial', '', 11);
+        $this->SetY(45);
+        $this->Cell(0,6,"Revised $details->revised",0,0,'L');
         $this->SetY(65);
+        $this->SetFont('Arial', 'B', 12);
+
         $this->Cell(15, 6, "Name: ", 0, 0, 'L');
         $this->Cell(105, 6, "$stInfo->lname, $stInfo->fname $stInfo->mi", 'B', 1, 'L');
 
@@ -106,6 +110,28 @@ class PDF extends FPDF
         $this->Cell(90,6, $details->tcry,1,0,'L');
         $this->Cell(0,6,$details->tcry_sy, 1,1,'C');
 
+        //check availability of picture
+        $file = "../images/portraits/$stInfo->idnum.jpg";
+        if(file_exists($file)) {
+            $this->Image($file, 140, 70, 0, 68);
+        }
+
+        //grading system image..
+        $this->Image('../images/grade_table.png', 11, 170, 195);
+    }
+
+    function renderSem($sem, $rows) {
+        $lh = 5.5;
+        $this->SetFont('Arial','B',12);
+        $this->Cell(0,6,"{$sem['sy']} - {$sem['school']}",0,1,'L');
+        $this->SetFont('Arial','',11);
+        foreach($rows as $row) {
+            $this->Cell(45,$lh,$row['course'],1,0,'L');
+            $this->Cell(120,$lh,ucwords(strtolower($row['description'])),1,0,'L');
+            $this->Cell(15,$lh,$row['rating'], 1,0,'C');
+            $this->Cell(15,$lh,$row['units'], 1,1,'C');
+        }
+        $this->Ln(2);
     }
 
 
@@ -118,6 +144,26 @@ if (isset($_GET['idNumber'])) {
     $pdf = new PDF('P', 'mm', [215.9, 330.2]);
     $pdf->AliasNbPages();
     $pdf->firstPage();
+
+    //distribute semesters to pages...
+    $limit = 34;
+    $rowCount = $limit;
+    $sems = getSems($idNumber);
+    foreach($sems as $sem) {
+        $rows = getSemRows($sem['id']);
+        $incoming_rows = count($rows) + 1;
+
+        if( ($rowCount + $incoming_rows) > $limit) {
+            $pdf->AddPage();
+            $pdf->SetY(65);
+            $rowCount = 0;
+        }
+
+        $pdf->renderSem($sem, $rows);
+        $rowCount += $incoming_rows;
+    }
+
+
 
     $pdf->Output();
 }
