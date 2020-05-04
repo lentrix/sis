@@ -5,21 +5,23 @@
 
 <?php
 function getSubCodeFromClass($class_code){
-    $sc = mysql_query("SELECT sub_code FROM class WHERE class_code=$class_code");
-    if(mysql_num_rows($sc)==1){
-        $scr = mysql_fetch_row($sc);
+    global $db;
+    $sc = mysqli_query($db, "SELECT sub_code FROM class WHERE class_code=$class_code");
+    if(mysqli_num_rows($sc)==1){
+        $scr = mysqli_fetch_row($sc);
         return $scr[0];
     }else return false;
 }
 
 function getList($class_code){
-    $list1 = mysql_query("SELECT idext, stud_enrol.idnum, 
-			CONCAT(lname,', ',fname,' ',mi) AS 'name', 
-			cr_acrnm, year FROM stud_info, stud_enrol, courses 
-			WHERE stud_enrol.idnum = stud_info.idnum 
+    global $db;
+    $list1 = mysqli_query($db, "SELECT idext, stud_enrol.idnum,
+			CONCAT(lname,', ',fname,' ',mi) AS 'name',
+			cr_acrnm, year FROM stud_info, stud_enrol, courses
+			WHERE stud_enrol.idnum = stud_info.idnum
 			AND courses.cr_num=stud_enrol.course
 			AND sem_code={$_SESSION['sem_code']}
-			AND stud_enrol.idnum IN (SELECT sub_enrol.idnum FROM sub_enrol 
+			AND stud_enrol.idnum IN (SELECT sub_enrol.idnum FROM sub_enrol
 				WHERE sub_enrol.class_code=$class_code AND rating<>'W')
 			ORDER BY lname, fname");
 	return $list1;
@@ -28,45 +30,45 @@ function getList($class_code){
 function showList($class_code) {
     $list1 = getList($class_code);
 	echo "<ol type='1'>";
-	while($lr=mysql_fetch_assoc($list1)) {
+	while($lr=mysqli_fetch_assoc($list1)) {
 	    echo "<li>" . $lr['name'] . "[" . $lr['cr_acrnm'] . "-" . $lr['year'] . "]</li>";
 	}
 	echo "</ol>";
 }
 function analyze($class_code1, $class_code2){
-    
+    global $db;
     $issues = array();
-    
+
     $list = getList($class_code1);
-    
-    $classDetail = mysql_query("SELECT * FROM class WHERE class_code=$class_code2");
-    $classDetailRow = mysql_fetch_assoc($classDetail);
-    
+
+    $classDetail = mysqli_query($db, "SELECT * FROM class WHERE class_code=$class_code2");
+    $classDetailRow = mysqli_fetch_assoc($classDetail);
+
     //check population..
     $pop1 = getClassPopulation($class_code1);
     $pop2 = getClassPopulation($class_code2);
     $limit = getClassLimit($class_code2);
     if($limit < ($pop1+$pop2)) $issues[] = "The numbers of students to be added to the receiving class will exceed its limit";
-    
+
     //check student time conflict...
-	$frm_class = mysql_query("SELECT * FROM class_time WHERE class_code=$class_code2");
-	$frm_row = mysql_fetch_assoc($frm_class);
+	$frm_class = mysqli_query($db, "SELECT * FROM class_time WHERE class_code=$class_code2");
+	$frm_row = mysqli_fetch_assoc($frm_class);
     $start_time1 = $frm_row['t_start'];
 	$end_time1 = $frm_row['t_end'];
 	$day1 = $frm_row['day'];
-	
-	if(mysql_num_rows($frm_class)>1) {
-		$frm_row = mysql_fetch_assoc($frm_class);
+
+	if(mysqli_num_rows($frm_class)>1) {
+		$frm_row = mysqli_fetch_assoc($frm_class);
 		$start_time2 = $frm_row['t_start'];
 		$end_time2 = $frm_row['t_end'];
 		$day2 = $frm_row['day'];
 	}
-	
-    while($listrow=mysql_fetch_assoc($list)) {
+
+    while($listrow=mysqli_fetch_assoc($db, $list)) {
         $conflict = checkStudentSubjectTimeConflict($start_time1,$end_time1,$listrow['idnum'],$day1);
-		if(!conflict) $conflict = checkStudentSubjectTimeConflict($start_time1,$end_time1,$listrow['idnum'],$day1);
+		if(!$conflict) $conflict = checkStudentSubjectTimeConflict($start_time1,$end_time1,$listrow['idnum'],$day1);
         if($conflict){
-            while($conrow = mysql_fetch_assoc($conflict)) {
+            while($conrow = mysqli_fetch_assoc($conflict)) {
                 $issues[] = getFullName($listrow['idnum']) . " has a conflicting subject: " . 
                     $conrow['descript'] . " (" . $conrow['time'] . " " . $conrow['day'] . ")";
             }
@@ -78,17 +80,17 @@ function analyze($class_code1, $class_code2){
 
 <h1>Class To Class Transfer</h1>
 
-<?php 
+<?php
 if(isset($_POST['submit_transfer'])) {
-    
+
     $fromClassCode=$_POST['class_code1'];
     $toClassCode = $_POST['class_code2'];
-    
+
     $list = getList($fromClassCode);
-    $sub_code = getSubCodeFromClass($toClassCode);      
-    
+    $sub_code = getSubCodeFromClass($toClassCode);
+
     $issues = analyze($fromClassCode, $toClassCode);
-    
+
     if(count($issues)>0){
         echo "<div class='error'>The transfer cannot be performed due to the following issues:";
         echo "<ul type='disc'>";
@@ -96,18 +98,18 @@ if(isset($_POST['submit_transfer'])) {
             echo "<li>$issue</li>";
         }
         echo "</ul></div>";
-        
+
     }else{
-        while($row=mysql_fetch_assoc($list)) {
+        while($row=mysqli_fetch_assoc($list)) {
             $idnum = $row['idnum'];
-            mysql_query("UPDATE sub_enrol SET class_code=$toClassCode, sub_code=$sub_code WHERE class_code=$fromClassCode AND idnum=$idnum");
-            if(mysql_error()) echo "<div class='error'>" . mysql_error() . "</div>";
+            mysqli_query($db, "UPDATE sub_enrol SET class_code=$toClassCode, sub_code=$sub_code WHERE class_code=$fromClassCode AND idnum=$idnum");
+            if(mysqli_error($db)) echo "<div class='error'>" . mysqli_error($db) . "</div>";
         }
         echo "<div class='error'>Transfer finished.</div>";
         $datetime=date('Y-m-d');
         $time = localtime(time(),true);
         $timestr = $time['tm_hour'] . ":" . $time['tm_min'];
-        mysql_query("INSERT INTO log (user, date, detail)
+        mysqli_query($db, "INSERT INTO log (user, date, detail)
             VALUES ('{$_SESSION['user']}','$datetime $timestr','Transfered the students from " . getClassNameAndTime($fromClassCode,false) .
                 " to " . getClassNameAndTime($toClassCode,false) . "')");
         $_POST['submit_view_list']="Review List";
@@ -130,7 +132,7 @@ subject description but it is not normal and certainly not recommended nor advis
 </div>
 
 <?php
-$s1 = "SELECT class_code, name, descript 
+$s1 = "SELECT class_code, name, descript
 		FROM class, subjects
 		WHERE class.sub_code=subjects.sub_code
 		AND sem_code={$_SESSION['sem_code']}
@@ -167,7 +169,7 @@ if(isset($_POST['submit_view_list'])) {
         </td></tr>";
 }
 ?>
-            
+
         </table>
     </form>
 </div>

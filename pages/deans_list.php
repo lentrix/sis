@@ -1,12 +1,13 @@
 <?php
 function getWeightedAverage($idnum, $sem_code){
-	$grd = mysql_query("SELECT rating, cunits FROM sub_enrol se, class c 
+	global $db;
+	$grd = mysqli_query($db, "SELECT rating, cunits FROM sub_enrol se, class c
 		WHERE se.class_code = c.class_code AND idnum=$idnum AND se.sem_code=$sem_code");
-	echo mysql_error();
+	echo mysqli_error($db);
 	$ws = 0;
 	$wt = 0;
-	
-	while($grdr = mysql_fetch_assoc($grd)) {
+
+	while($grdr = mysqli_fetch_assoc($grd)) {
 		$exclude = array("","NaN","-",NULL,"DR","wd","NG","ng","dr","WD","NULL");
 		foreach($exclude as $exc){
 			if($grdr['rating']==$exc) return 0;
@@ -25,14 +26,14 @@ include("library/student_grade.php");
 <script type="text/javascript">
 function showGrade(idnum){
 	box = document.getElementById('stbox_'+idnum).style.display='block';
-	
+
 }
 </script>
 
 <h1>Deans List Generator</h1>
 
-<?php 
-$st = mysql_query("SELECT si.idnum, CONCAT(lname,', ', fname,' ', mi) as 'name', cr_acrnm, year FROM stud_info si, stud_enrol se, courses c
+<?php
+$st = mysqli_query($db, "SELECT si.idnum, CONCAT(lname,', ', fname,' ', mi) as 'name', cr_acrnm, year FROM stud_info si, stud_enrol se, courses c
 			WHERE si.idnum=se.idnum AND se.course=c.cr_num AND se.sem_code={$_SESSION['sem_code']} AND c.clg_no={$_SESSION['clg_no']}
 			ORDER BY lname, fname");
 $discarded = array();
@@ -41,14 +42,14 @@ $discarded = array();
 	<tr>
 		<th width="30">#</th>
 		<th width="80">ID Number:</th>
-		<th width="250">Name:</th>		
+		<th width="250">Name:</th>
 		<th width="80">Course &amp; Year:</th>
 		<th width="80">Weighted Ave:</th>
 	</tr>
-<?php $n=0; ?>	
-<?php while($str = mysql_fetch_assoc($st)) { ?>
+<?php $n=0; ?>
+<?php while($str = mysqli_fetch_assoc($st)) { ?>
 	<?php $wtave = getWeightedAverage($str['idnum'], $_SESSION['sem_code']); ?>
-	
+
 	<?php if($wtave) { ?>
 		<?php if($wtave<=1.60) { ?>
 		<td><?php echo ++$n; ?></td>
@@ -79,7 +80,7 @@ $discarded = array();
 	<tr>
 		<th width="30">#</th>
 		<th width="80">ID Number:</th>
-		<th width="250">Name:</th>		
+		<th width="250">Name:</th>
 		<th width="80">Course &amp; Year:</th>
 	</tr>
 <?php $n=1; ?>
@@ -99,7 +100,7 @@ $discarded = array();
 		</td>
 		<td><?php echo $dsub['name'];?></td>
 		<td><?php echo $dsub['course_year'];?></td>
-		
+
 	</tr>
 <?php } ?>
 </table>

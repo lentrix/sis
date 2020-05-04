@@ -2,10 +2,12 @@
 <?php include("library/singles.php"); ?>
 <h1>Teacher's Load</h1>
 
-<?php $list = mysql_query("SELECT CONCAT(fname,' ',lname) AS 'teacher', class_code, name, descript, cunits, punits
+<?php $sql = "SELECT CONCAT('fname',' ', 'lname') AS 'teacher', class_code, `name`, descript, cunits, punits
 	 FROM class, teacher, subjects
 	WHERE class.tch_num=teacher.tch_num AND class.sub_code=subjects.sub_code 
-	AND sem_code={$_SESSION['sem_code']} ORDER BY teacher, name"); ?>
+    AND sem_code={$_SESSION['sem_code']} ORDER BY teacher, `name`"; ?>
+    
+<?php $list = mysqli_query($db, $sql); ?>
 
 <table style="border-collapse: collapse; width: 100%">
 <tr>
@@ -17,7 +19,7 @@
     <td class="thead" width="5%">Pay Unit:</td>
     <td class="thead" width="5%">Num:</td>
 </tr>
-<?php while($row=mysql_fetch_assoc($list)) : ?>
+<?php while($row=mysqli_fetch_assoc($list)) : ?>
 <tr>
     <td class="tcel" width="20%"><?php echo $row['teacher'];?></td>
     <td class="tcel" width="10%"><?php echo $row['name'];?></td>

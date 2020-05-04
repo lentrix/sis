@@ -1,5 +1,5 @@
 
-<?php	function ShowStudentSubjects($idnum, $sem_code, $del=true) {  ?>
+<?php	function ShowStudentSubjects($idnum, $sem_code, $del=true) { global $db; ?>
 <table style="border-collapse: collapse" border="1" cellpadding="0" cellspacing="0">
 	<tr>
 	    <td class="thead" width="80">Name:</td>
@@ -13,21 +13,21 @@
 		if(isset($_SESSION['view_edit_class'])) $page = "view_edit_class";
 		else $page = "view_class";
 
-		$stsub = mysql_query("SELECT class.class_code, name, descript,  
-			cunits, punits, CONCAT(fname,' ',lname) AS 'teacher', class.limit 
-			FROM sub_enrol, stud_enrol, class, subjects, teacher 
-			WHERE sub_enrol.idnum=stud_enrol.idnum 
-			AND sub_enrol.class_code = class.class_code 
-			AND subjects.sub_code=class.sub_code 
-			AND class.tch_num=teacher.tch_num 
-			AND stud_enrol.idnum=$idnum 
+		$stsub = mysqli_query($db, "SELECT class.class_code, name, descript,
+			cunits, punits, CONCAT(fname,' ',lname) AS 'teacher', class.limit
+			FROM sub_enrol, stud_enrol, class, subjects, teacher
+			WHERE sub_enrol.idnum=stud_enrol.idnum
+			AND sub_enrol.class_code = class.class_code
+			AND subjects.sub_code=class.sub_code
+			AND class.tch_num=teacher.tch_num
+			AND stud_enrol.idnum=$idnum
 			AND stud_enrol.sem_code = sub_enrol.sem_code
 			AND stud_enrol.sem_code=$sem_code");
-		echo mysql_error();
-		if(mysql_num_rows($stsub)){
+		echo mysqli_error($db);
+		if(mysqli_num_rows($stsub)){
 		    $tcunits = 0;
 		    $tpunits = 0;
-			while($stsrow=mysql_fetch_assoc($stsub)){
+			while($stsrow=mysqli_fetch_assoc($stsub)){
 				echo "<tr><td class='tcel'>";
 				$time = getClassTimeRoom($stsrow['class_code'],true);
 				if($del) {
@@ -38,10 +38,10 @@
 						document.delete_class_form.idnum.value='$idnum';
 						document.getElementById('class_detail_for_delete').innerHTML=
 							'{$stsrow['descript']}-'\" title='{$stsrow['class_code']}'>";
-				} else { 
-					echo "<a href='index.php?page=$page&class_code={$stsrow['class_code']}' 
+				} else {
+					echo "<a href='index.php?page=$page&class_code={$stsrow['class_code']}'
 						style='font-size: 8pt; text-decoration: none;cursor: pointer;font-weight:bold'
-						 title='{$stsrow['class_code']}'>" ;
+						title='{$stsrow['class_code']}'>" ;
 				}
 				echo "{$stsrow['name']}</a></td>";
 				echo "<td class='tcel'>{$stsrow['descript']}</td>";

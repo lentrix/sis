@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("library/alpha_page.php");
 include("library/population.php");
 include("library/singles.php");
@@ -21,12 +21,12 @@ if(isset($_GET['alphapage'])) {
 	    $alpha_page = " AND name LIKE '{$_GET['alphapage']}%' ";
     }
 }else $alpha_page="AND name LIKE 'A%' ";
-$sequel = "SELECT class_code, name, descript, cunits, punits, 
+$sequel = "SELECT class_code, name, descript, cunits, punits,
 	CONCAT(fname,' ',lname) AS 'teacher' FROM class, teacher, subjects
-	WHERE class.tch_num=teacher.tch_num AND class.sub_code=subjects.sub_code 
+	WHERE class.tch_num=teacher.tch_num AND class.sub_code=subjects.sub_code
 	$alpha_page AND sem_code={$_SESSION['sem_code']} ORDER BY name";
 
-$cls = mysql_query($sequel);
+$cls = mysqli_query($db, $sequel);
 ?>
 
 <table style="border-collapse: collapse; width: 100%">
@@ -41,7 +41,7 @@ $cls = mysql_query($sequel);
     <td class="thead" width="20%">Instructor:</td>
 </tr>
 
-<?php while($row = mysql_fetch_assoc($cls)) { ?>
+<?php while($row = mysqli_fetch_assoc($cls)) { ?>
 <tr>
 	<td class="tcel" width="10%"><a href="index.php?page=view_class&class_code=<?php echo $row['class_code'];?>" 
         	style="font-size: 9pt; text-decoration: none;font-weight:bold"><?php echo $row['class_code'];?></a></td>
@@ -53,6 +53,6 @@ $cls = mysql_query($sequel);
 	<td class="tcel" width="5%"><?php echo getClassPopulation($row['class_code']); ?></td>
     <td class="tcel" width="20%"><?php echo $row['teacher'];?></td>
 </tr>
-    
+
 <?php } ?>
 </table>

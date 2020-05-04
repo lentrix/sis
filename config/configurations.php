@@ -1,5 +1,5 @@
 <?php 
-	$u='mdc_sis';
+	$u='grading';
 	$p='system';
 	$h='localhost';
 	$d='mdc';

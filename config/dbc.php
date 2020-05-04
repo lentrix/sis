@@ -1,5 +1,5 @@
 <?php
 	include("configurations.php");
-	mysql_connect($h,$u,$p);
-	mysql_select_db($d);
+	$db = mysqli_connect($h,$u,$p);
+	mysqli_select_db($db,'mdc');
 ?>
