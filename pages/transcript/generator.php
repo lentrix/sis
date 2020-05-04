@@ -14,7 +14,7 @@ $enrolsSQL = mysqli_query($db, "SELECT se.enrol_id, sm.sem, sm.sem_code, cr.cr_a
     WHERE se.idnum=$id
     ORDER BY sm.sem_code");
 
-$ord = 200;
+$ord = 20000;
 
 while ($enrols = mysqli_fetch_object($enrolsSQL)) {
 
@@ -42,7 +42,7 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
         WHERE sub_enrol.idnum = $id AND sub_enrol.sem_code=$enrols->sem_code");
 
     while ($classes = mysqli_fetch_object($classesSQL)) {
-        $rating = is_numeric($classes->rating) ? $classes->rating : 'null';
+        $rating = is_numeric($classes->rating) ? number_format($classes->rating, 2) : 'null';
         $units = (is_numeric($classes->cunits) && (is_numeric($classes->rating) && $classes->rating<=3.0) ) ? $classes->cunits : 0;
         mysqli_query($db, "INSERT INTO transcript_row (
             `transcript_sem_id`, `course`, `description`, `rating`,`units`
@@ -50,14 +50,14 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
             $insert_id,
             '$classes->name',
             '$classes->descript',
-            $rating,
-            $units
+            '$rating',
+            '$units'
         )");
 
         if (mysqli_error($db)) die(mysqli_error($db) . " == " . $rating);
     }
 
-    $ord = $ord + 500;
+    $ord = $ord + 1000;
 }//while $enrols
 
 

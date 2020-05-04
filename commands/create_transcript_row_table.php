@@ -7,8 +7,8 @@ $create = "CREATE TABLE IF NOT EXISTS transcript_row (
     `transcript_sem_id` INTEGER UNSIGNED NOT NULL,
     `course` VARCHAR(50) NOT NULL,
     `description` VARCHAR(225) NOT NULL,
-    `rating` DECIMAL(2,1),
-    `units` DECIMAL(3,1),
+    `rating` VARCHAR(5),
+    `units` VARCHAR(6),
 
     FOREIGN KEY (`transcript_sem_id`) REFERENCES transcript_sem(`id`) ON DELETE CASCADE
     )";

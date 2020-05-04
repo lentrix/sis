@@ -27,27 +27,29 @@ if (isset($_GET['sem'])) :
         }
 
         for ($i = 0; $i < 12; $i++) {
-            if ($_POST['rowId'][$i]) {
-                $rowId = $_POST['rowId'][$i];
-                $course = $db->real_escape_string($_POST['course'][$i]);
-                $description = $db->real_escape_string($_POST['description'][$i]);
-                $rating = $db->real_escape_string($_POST['rating'][$i]);
-                $units = $db->real_escape_string($_POST['units'][$i]);
+            $rowId = $_POST['rowId'][$i];
+            $course = $db->real_escape_string($_POST['course'][$i]);
+            $description = $db->real_escape_string($_POST['description'][$i]);
+            $rating = $db->real_escape_string($_POST['rating'][$i]);
+            $units = $db->real_escape_string($_POST['units'][$i]);
 
-                if(!$course) {
-                    $db->query("DELETE FROM transcript_row WHERE id=$rowId");
-                }else {
-                    $db->query("UPDATE transcript_row SET course='$course', description='$description', rating=$rating, units=$units
-                            WHERE id=$rowId");
+            if (!$course && $rowId) {
+                $db->query("DELETE FROM transcript_row WHERE id=$rowId");
+            } else if ($course && $rowId) {
+                $db->query("UPDATE transcript_row SET course='$course', description='$description', rating='$rating', units='$units'
+                                WHERE id=$rowId");
+            } else if ($course && !$rowId) {
+                $db->query("INSERT INTO transcript_row (`course`, `description`, `rating`, `units`, `transcript_sem_id`) VALUES (
+                            '$course','$description','$rating','$units',$semId
+                        )");
+            }
 
-                    if (mysqli_error($db)) {
-                        die(mysqli_error($db));
-                    }
-                }
+            if (mysqli_error($db)) {
+                die(mysqli_error($db));
             }
         }
 
-        echo "<script>window.location='index.php?page=transcript&idNumber=$sem->idnum';</script>";
+        echo "<script>window.location='index.php?page=transcript/transcript&idNumber=$sem->idnum';</script>";
     }
 ?>
 
@@ -122,7 +124,7 @@ if (isset($_GET['sem'])) :
         </table>
 
         <div class="right">
-            <button type="button" onclick="window.location='index.php?page=transcript&idNumber=<?= $sem->idnum ?>'">Cancel</button>
+            <button type="button" onclick="window.location='index.php?page=transcript/transcript&idNumber=<?= $sem->idnum ?>'">Cancel</button>
             <button type="submit" name="submit">Submit</button>
         </div>
     </form>

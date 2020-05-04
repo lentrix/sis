@@ -48,7 +48,7 @@ if (isset($_POST['save_details'])) {
 
     if (mysqli_error($db)) {
         echo mysqli_error($db);
-    } 
+    }
 }
 
 ?>
@@ -60,17 +60,17 @@ if (isset($_POST['save_details'])) {
     <form action="" method="get">
         <label for="idNumber">Enter ID Number</label>
         <input type="text" name="idNumber" id="idNumber">
-        <input type="hidden" name="page" value="transcript">
+        <input type="hidden" name="page" value="transcript/transcript">
         <button type="submit" name="submit">Get Transcript</button>
     </form>
 
-<?php else : include("transcript_generator.php"); ?>
+<?php else : include("generator.php"); ?>
     <span style="float: right">
-        <form action="/sis/pages/transcript_pdf.php" method="get" style="display: inline" target="_blank">
+        <form action="/sis/pages/transcript/pdf.php" method="get" style="display: inline" target="_blank">
             <input type="hidden" name="idNumber" value="<?= $_GET['idNumber'] ?>">
             <button type="submit">PDF</button>
         </form>
-        <button type="button" onClick="window.location='index.php?page=transcript'">X</button>
+        <button type="button" onClick="window.location='index.php?page=transcript/transcript'">X</button>
     </span>
     <div>
         <strong>Name</strong> <?= getFullName($id); ?>
@@ -82,19 +82,20 @@ if (isset($_POST['save_details'])) {
             <thead>
                 <tr>
                     <th colspan="4" class="right" style="background-color:white; padding: 5px">
-                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_insert&direction=above&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Insert Before</button>
-                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_insert&direction=below&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Insert After</button>
-                        <form action="" method="post" style="display: inline">
-                            <input type="hidden" name="semId" value="<?= $sem->id ?>">
-                            <button style="font-size: 12px" name="moveDown" type="submit">Move Down</button>
-                        </form>
-                        <form action="" method="post" style="display: inline">
-                            <input type="hidden" name="semId" value="<?= $sem->id ?>">
-                            <button style="font-size: 12px" name="moveUp" type="submit">Move Up</button>
-                        </form>
+                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript/insert&direction=above&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">+ Before</button>
+                        <button style="font-size: 12px" onclick="window.location='index.php?page=transcript/insert&direction=below&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">+ After</button>
                         <?php if ($sem->type == 'ext') : ?>
-                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_edit&sem=<?= $sem->id ?>'">Edit</button>
-                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript_delete&sem=<?= $sem->id ?>'">Delete</button>
+                            <form action="" method="post" style="display: inline">
+                                <input type="hidden" name="semId" value="<?= $sem->id ?>">
+                                <button style="font-size: 12px" name="moveDown" type="submit">Move Down</button>
+                            </form>
+                            <form action="" method="post" style="display: inline">
+                                <input type="hidden" name="semId" value="<?= $sem->id ?>">
+                                <button style="font-size: 12px" name="moveUp" type="submit">Move Up</button>
+                            </form>
+
+                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript/edit&sem=<?= $sem->id ?>'">Edit</button>
+                            <button style="font-size: 12px" onclick="window.location='index.php?page=transcript/delete&sem=<?= $sem->id ?>'">Delete</button>
                         <?php endif; ?>
                     </th>
                 </tr>

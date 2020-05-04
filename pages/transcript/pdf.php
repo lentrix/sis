@@ -2,9 +2,9 @@
 
 session_start();
 
-include("../config/dbc.php");
-include("../library/transcript_functions.php");
-include("../library/fpdf.php");
+include("../../config/dbc.php");
+include("../../library/transcript_functions.php");
+include("../../library/fpdf.php");
 
 $idNumber = $_GET['idNumber'];
 
@@ -52,42 +52,42 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 12);
 
         $this->Cell(15, 6, "Name: ", 0, 0, 'L');
-        $this->Cell(105, 6, "$stInfo->lname, $stInfo->fname $stInfo->mi", 'B', 1, 'L');
+        $this->Cell(115, 6, "$stInfo->lname, $stInfo->fname $stInfo->mi", 'B', 1, 'L');
 
         $this->Cell(45, 6, 'Student Number:', 0, 0, 'L');
         $this->Cell(30, 6, "$stInfo->idnum-$stInfo->idext", 'B', 0, 'L');
         $this->Cell(18, 6, "    Sex:", 0, 0, 'L');
-        $this->Cell(27, 6, "$stInfo->gender", 'B', 1, 'L');
+        $this->Cell(37, 6, "$stInfo->gender", 'B', 1, 'L');
 
         $this->Cell(45, 6, "Date of Birth:", 0, 0, 'L');
-        $this->Cell(75, 6, date('F d, Y', strtotime($stInfo->bdate)), 'B', 1, 'L');
+        $this->Cell(85, 6, date('F d, Y', strtotime($stInfo->bdate)), 'B', 1, 'L');
 
         $this->Cell(45, 6, "Place of Birth:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->place_of_birth, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->place_of_birth, 'B', 1, 'L');
 
         $this->Cell(45, 6, "Nationality:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->nationality, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->nationality, 'B', 1, 'L');
 
         $this->Cell(45, 6, "Religion:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->religion, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->religion, 'B', 1, 'L');
 
         $this->Cell(45, 6, "Parent/Guardians:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->guardians, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->guardians, 'B', 1, 'L');
 
         $this->Cell(45, 6, "          Address:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->gd_address, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->gd_address, 'B', 1, 'L');
 
         $this->Cell(45, 6, "Home Address:", 0, 0, 'L');
-        $this->Cell(75, 6, ucfirst(strtolower($stInfo->addb)) . ', ' . ucfirst(strtolower($stInfo->addt)) . ', ' . ucfirst(strtolower($stInfo->addp)), 'B', 1, 'L');
+        $this->Cell(85, 6, strtoupper($stInfo->addb) . ', ' . ucfirst(strtolower($stInfo->addt)) . ', ' . ucfirst(strtolower($stInfo->addp)), 'B', 1, 'L');
 
         $this->Cell(45, 6, "Date Admitted:", 0, 0, 'L');
-        $this->Cell(75, 6, date('F d, Y', strtotime($details->dt_admitted)), 'B', 1, 'L');
+        $this->Cell(85, 6, date('F d, Y', strtotime($details->dt_admitted)), 'B', 1, 'L');
 
         $this->Cell(45, 6, "Entrance Data:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->entrance_data, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->entrance_data, 'B', 1, 'L');
 
         $this->Cell(45, 6, "College of:", 0, 0, 'L');
-        $this->Cell(75, 6, $details->college, 'B', 1, 'L');
+        $this->Cell(85, 6, $details->college, 'B', 1, 'L');
 
         $this->Cell(45,6,"Preliminary Education:",0,1,'L');
 
@@ -111,25 +111,26 @@ class PDF extends FPDF
         $this->Cell(0,6,$details->tcry_sy, 1,1,'C');
 
         //check availability of picture
-        $file = "../images/portraits/$stInfo->idnum.jpg";
+        $file = "../../images/portraits/$stInfo->idnum.jpg";
         if(file_exists($file)) {
-            $this->Image($file, 140, 70, 0, 68);
+            $this->Image($file, 145, 62, 61, 0);
         }
 
         //grading system image..
-        $this->Image('../images/grade_table.png', 11, 170, 195);
+        $this->Image('../../images/grade_table.png', 11, 170, 195);
     }
 
     function renderSem($sem, $rows) {
-        $lh = 5.5;
+        $lh = 5;
         $this->SetFont('Arial','B',12);
-        $this->Cell(0,6,"{$sem['sy']} - {$sem['school']}",0,1,'L');
+        $this->Cell(0,5.5,"{$sem['sy']} - {$sem['school']}",'B',1,'L');
+        $this->Ln(2);
         $this->SetFont('Arial','',11);
         foreach($rows as $row) {
-            $this->Cell(45,$lh,$row['course'],1,0,'L');
-            $this->Cell(120,$lh,ucwords(strtolower($row['description'])),1,0,'L');
-            $this->Cell(15,$lh,$row['rating'], 1,0,'C');
-            $this->Cell(15,$lh,$row['units'], 1,1,'C');
+            $this->Cell(45,$lh,$row['course'],0,0,'L');
+            $this->Cell(120,$lh,strtoupper($row['description']),0,0,'L');
+            $this->Cell(15,$lh,$row['rating'], 0,0,'C');
+            $this->Cell(15,$lh,$row['units'], 0,1,'C');
         }
         $this->Ln(2);
     }
@@ -146,7 +147,7 @@ if (isset($_GET['idNumber'])) {
     $pdf->firstPage();
 
     //distribute semesters to pages...
-    $limit = 34;
+    $limit = 33;
     $rowCount = $limit;
     $sems = getSems($idNumber);
     foreach($sems as $sem) {
@@ -156,6 +157,15 @@ if (isset($_GET['idNumber'])) {
         if( ($rowCount + $incoming_rows) > $limit) {
             $pdf->AddPage();
             $pdf->SetY(65);
+            $pdf->SetFont('Arial','B',11);
+            $pdf->Cell(140,5.5, "Name: $stInfo->lname, $stInfo->fname",0,0,'L');
+            $pdf->Cell(0,5.5,"ID.No.: $stInfo->idnum-$stInfo->idext", 0,1,'R');
+            $pdf->Cell(0,3,"",'T',1,'L');
+            $pdf->Cell(45,6,"Course No.",1,0,'L');
+            $pdf->Cell(120,6,"Descriptive Title",1,0,'C');
+            $pdf->Cell(15,6,"Grade",1,0,'C');
+            $pdf->Cell(0,6,"Unit/s",1,1,'C');
+            $pdf->Ln(2);
             $rowCount = 0;
         }
 

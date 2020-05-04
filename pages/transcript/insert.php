@@ -37,12 +37,12 @@ if(isset($_POST['submit'])) {
             $db->query("INSERT INTO transcript_row (
                 `transcript_sem_id`, `course`, `description`, `rating`, `units`
             ) VALUES (
-                $generated_key, '$course', '$description', $rating, $units
+                $generated_key, '$course', '$description', '$rating', '$units'
             )");
         }
     }
 
-    echo "<script>window.location='index.php?page=transcript&idNumber=$idnum'</script>";
+    echo "<script>window.location='index.php?page=transcript/transcript&idNumber=$idnum'</script>";
 }
 
 ?>
@@ -118,7 +118,7 @@ if(isset($_POST['submit'])) {
     </table>
 
     <div class="right">
-        <button type="button" onclick="window.location='index.php?page=transcript&idNumber=<?= $idnum ?>'">Cancel</button>
+        <button type="button" onclick="window.location='index.php?page=transcript/transcript&idNumber=<?= $idnum ?>'">Cancel</button>
         <button type="submit" name="submit">Submit</button>
     </div>
 </form>

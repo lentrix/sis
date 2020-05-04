@@ -13,7 +13,7 @@ if (isset($_GET['sem'])) :
 
         $db->query("DELETE FROM transcript_sem WHERE id=$semId");
 
-        echo "<script>window.location='index.php?page=transcript&idNumber=$sem->idnum'</script>";
+        echo "<script>window.location='index.php?page=transcript/transcript&idNumber=$sem->idnum'</script>";
 
     }
 ?>
@@ -46,7 +46,7 @@ if (isset($_GET['sem'])) :
     <p>
         <form action="" method="post">
             Are you sure about deleting this transcript semester? <br><br>
-            <button type="button" onclick="window.location='index.php?page=transcript&idNumber=<?= $sem->idnum ?>';">Cancel</button>
+            <button type="button" onclick="window.location='index.php?page=transcript/transcript&idNumber=<?= $sem->idnum ?>';">Cancel</button>
             <button type="submit" name="delete"> Yes </button>
         </form>
     </p>
