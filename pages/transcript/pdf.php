@@ -47,7 +47,7 @@ class PDF extends FPDF
         $this->AddPage();
         $this->SetFont('Arial', '', 11);
         $this->SetY(45);
-        $this->Cell(0,6,"Revised $details->revised",0,0,'L');
+        $this->Cell(0, 6, "Revised $details->revised", 0, 0, 'L');
         $this->SetY(65);
         $this->SetFont('Arial', 'B', 12);
 
@@ -89,30 +89,30 @@ class PDF extends FPDF
         $this->Cell(45, 6, "College of:", 0, 0, 'L');
         $this->Cell(85, 6, $details->college, 'B', 1, 'L');
 
-        $this->Cell(45,6,"Preliminary Education:",0,1,'L');
+        $this->Cell(45, 6, "Preliminary Education:", 0, 1, 'L');
 
-        $this->Cell(45,6,"",0,0,'L');
-        $this->Cell(90,6, "Name of School",1,0,'C');
-        $this->Cell(0,6,'School Year',1,1,'C');
+        $this->Cell(45, 6, "", 0, 0, 'L');
+        $this->Cell(90, 6, "Name of School", 1, 0, 'C');
+        $this->Cell(0, 6, 'School Year', 1, 1, 'C');
 
-        $this->Cell(18,6,"");
-        $this->Cell(27,6,"Elementary: ",0,0,'L');
-        $this->Cell(90,6, $details->elem,1,0,'L');
-        $this->Cell(0,6,$details->elem_sy, 1,1,'C');
+        $this->Cell(18, 6, "");
+        $this->Cell(27, 6, "Elementary: ", 0, 0, 'L');
+        $this->Cell(90, 6, $details->elem, 1, 0, 'L');
+        $this->Cell(0, 6, $details->elem_sy, 1, 1, 'C');
 
-        $this->Cell(18,6,"");
-        $this->Cell(27,6,"Secondary: ",0,0,'L');
-        $this->Cell(90,6, $details->secn,1,0,'L');
-        $this->Cell(0,6,$details->secn_sy, 1,1,'C');
+        $this->Cell(18, 6, "");
+        $this->Cell(27, 6, "Secondary: ", 0, 0, 'L');
+        $this->Cell(90, 6, $details->secn, 1, 0, 'L');
+        $this->Cell(0, 6, $details->secn_sy, 1, 1, 'C');
 
-        $this->Cell(18,6,"");
-        $this->Cell(27,6,"Tertiary: ",0,0,'L');
-        $this->Cell(90,6, $details->tcry,1,0,'L');
-        $this->Cell(0,6,$details->tcry_sy, 1,1,'C');
+        $this->Cell(18, 6, "");
+        $this->Cell(27, 6, "Tertiary: ", 0, 0, 'L');
+        $this->Cell(90, 6, $details->tcry, 1, 0, 'L');
+        $this->Cell(0, 6, $details->tcry_sy, 1, 1, 'C');
 
         //check availability of picture
         $file = "../../images/portraits/$stInfo->idnum.jpg";
-        if(file_exists($file)) {
+        if (file_exists($file)) {
             $this->Image($file, 145, 62, 61, 0);
         }
 
@@ -120,22 +120,53 @@ class PDF extends FPDF
         $this->Image('../../images/grade_table.png', 11, 170, 195);
     }
 
-    function renderSem($sem, $rows) {
+    function renderSem($sem, $rows)
+    {
         $lh = 5;
-        $this->SetFont('Arial','B',12);
-        $this->Cell(0,5.5,"{$sem['sy']} - {$sem['school']}",'B',1,'L');
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(0, 5.5, "{$sem['sy']} - {$sem['school']}", 'B', 1, 'L');
         $this->Ln(2);
-        $this->SetFont('Arial','',11);
-        foreach($rows as $row) {
-            $this->Cell(45,$lh,$row['course'],0,0,'L');
-            $this->Cell(120,$lh,strtoupper($row['description']),0,0,'L');
-            $this->Cell(15,$lh,$row['rating'], 0,0,'C');
-            $this->Cell(15,$lh,$row['units'], 0,1,'C');
+        $this->SetFont('Arial', '', 11);
+        foreach ($rows as $row) {
+            $this->Cell(45, $lh, $row['course'], 0, 0, 'L');
+            $this->Cell(120, $lh, strtoupper($row['description']), 0, 0, 'L');
+            $this->Cell(15, $lh, $row['rating'], 0, 0, 'C');
+            $this->Cell(15, $lh, $row['units'], 0, 1, 'C');
         }
+
         $this->Ln(2);
     }
 
+    function renderGrad($sem) {
+        $lh = 5;
+        if ($grad = getGrad($sem['idnum'], $sem['ordinal'])) {
+            $this->SetFont('Arial','B',10);
+            $this->Cell(0, 0.8, "", 'TB', 1);
+            $this->Cell(45, $lh, "GRADUATED:", 0, 0, 'L');
+            $this->MultiCell(0, $lh, $grad->degree, 0, 'L', 0);
+            $this->Cell(45, $lh, "");
+            $this->MultiCell(0, $lh, $grad->so, 0, 'L', 0);
+            $this->Cell(45, $lh, "");
+            $this->Cell(0, $lh, date('F d, Y', strtotime($grad->date)), 0, 1, 'L');
+            $this->Cell(45, $lh, "");
+            $this->Cell(0, $lh, $grad->remarks, 0, 1, 'L');
+            $this->Cell(0, 1, "", 'T', 1);
+        }
+    }
 
+    function tableHeader($stInfo)
+    {
+        $this->AddPage();
+        $this->SetY(65);
+        $this->SetFont('Arial', 'B', 11);
+        $this->Cell(140, 5.5, "Name: $stInfo->lname, $stInfo->fname", 0, 0, 'L');
+        $this->Cell(0, 5.5, "ID.No.: $stInfo->idnum-$stInfo->idext", 0, 1, 'R');
+        $this->Cell(0, 3, "", 'T', 1, 'L');
+        $this->Cell(45, 6, "Course No.", 1, 0, 'L');
+        $this->Cell(120, 6, "Descriptive Title", 1, 0, 'C');
+        $this->Cell(15, 6, "Grade", 1, 0, 'C');
+        $this->Cell(0, 6, "Unit/s", 1, 1, 'C');
+    }
 }
 
 if (!isset($_SESSION['user'])) header("location:index.php");
@@ -150,28 +181,33 @@ if (isset($_GET['idNumber'])) {
     $limit = 33;
     $rowCount = $limit;
     $sems = getSems($idNumber);
-    foreach($sems as $sem) {
+    foreach ($sems as $sem) {
         $rows = getSemRows($sem['id']);
         $incoming_rows = count($rows) + 1;
 
-        if( ($rowCount + $incoming_rows) > $limit) {
-            $pdf->AddPage();
-            $pdf->SetY(65);
-            $pdf->SetFont('Arial','B',11);
-            $pdf->Cell(140,5.5, "Name: $stInfo->lname, $stInfo->fname",0,0,'L');
-            $pdf->Cell(0,5.5,"ID.No.: $stInfo->idnum-$stInfo->idext", 0,1,'R');
-            $pdf->Cell(0,3,"",'T',1,'L');
-            $pdf->Cell(45,6,"Course No.",1,0,'L');
-            $pdf->Cell(120,6,"Descriptive Title",1,0,'C');
-            $pdf->Cell(15,6,"Grade",1,0,'C');
-            $pdf->Cell(0,6,"Unit/s",1,1,'C');
-            $pdf->Ln(2);
+        if (($rowCount + $incoming_rows) > $limit) {
+            $pdf->tableHeader($stInfo);
             $rowCount = 0;
         }
 
         $pdf->renderSem($sem, $rows);
         $rowCount += $incoming_rows;
+
+        $gradRows = countGradTagRows($sem);
+
+        if(($rowCount + $gradRows > $limit)) {
+            $pdf->tableHeader($stInfo);
+            $rowCount = 0;
+        }
+
+        $pdf->renderGrad($sem);
+
+        $rowCount += $gradRows;
+
+        $pdf->Ln(2);
     }
+
+    $pdf->Cell(0,4.5, "MDCMDCMDCMDCMDCMDCMDCMDC== TRANSCRIPT CLOSED ==MDCMDCMDCMDCMDCMDCMDCMDC", 'TB',1,'C');
 
 
 

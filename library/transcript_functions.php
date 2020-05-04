@@ -115,3 +115,18 @@ function getSemRows($semId)
     global $db;
     return $db->query("SELECT * FROM transcript_row WHERE transcript_sem_id=$semId")->fetch_all(MYSQLI_ASSOC);
 }
+
+function getGrad($idnum, $ordinal) {
+    global $db;
+    return $db->query("SELECT * FROM transcript_grad_tag WHERE idnum=$idnum AND ordinal=$ordinal")->fetch_object();
+}
+
+function countGradTagRows($sem) {
+    global $db;
+$gradTag = $db->query("SELECT * FROM transcript_grad_tag WHERE idnum={$sem['idnum']} AND ordinal = {$sem['ordinal']}")->fetch_object();
+    if($gradTag) {
+        return 6;
+    }else{
+        return 0;
+    }
+}

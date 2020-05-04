@@ -51,6 +51,13 @@ if (isset($_POST['save_details'])) {
     }
 }
 
+if(isset($_POST['delete-grad'])) {
+    $idnum = $_POST['idnum'];
+    $ordinal = $_POST['ordinal'];
+
+    $db->query("DELETE FROM transcript_grad_tag WHERE idnum=$idnum AND ordinal=$ordinal");
+}
+
 ?>
 
 <h1>Transcript Generator</h1>
@@ -118,7 +125,25 @@ if (isset($_POST['save_details'])) {
                     <td class="tcel center"><?= $row->units ?></td>
                 </tr>
             <?php endwhile; ?>
+            <tr>
+                <td class="tcel" colspan="4">
+                    <?php if ($grad = getGrad($id, $sem->ordinal)) : ?>
+                        <form action="" method="post" style="float :right">
+                            <input type="hidden" name="idnum" value="<?= $grad->idnum ?>">
+                            <input type="hidden" name="ordinal" value="<?= $grad->ordinal ?>">
+                            <button type="submit" name="delete-grad">X</button>
+                        </form>
+                        GRADUATED: <?= $grad->degree ?> <br>
+                        DATE: <?= date('F d, Y', strtotime($grad->date)) ?> <br>
+                        <?= $grad->so ?> <br>
+                        <?= $grad->remarks ?>
+                    <?php else : ?>
+                        <button style="font-size: 12px; float: right" onclick="window.location='index.php?page=transcript/grad&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Grad</button>
+                    <?php endif; ?>
+                </td>
+            </tr>
         </table>
+
         <hr>
     <?php endwhile; ?>
     <h4>Additional Information</h4>
