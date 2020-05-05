@@ -6,12 +6,13 @@
 <script type="text/javascript">
 	function switchForm(n) {
 		forms = new Array();
-		forms = new Array("course_category", "year_category", "course_year_category", "college_category", "class_category");
+		forms = new Array("course_category", "year_category", "course_year_category", "college_category", "class_category", "address_category");
 
 		for (i = 0; i < forms.length; i++) {
 			if (forms[i] == n) document.getElementById(forms[i]).style.display = 'block';
 			else document.getElementById(forms[i]).style.display = 'none';
 		}
+
 	}
 </script>
 
@@ -25,6 +26,7 @@
 			<option onclick='switchForm("course_year_category");'>Course &amp; Year</option>
 			<option onclick='switchForm("college_category");'>College</option>
 			<option onclick='switchForm("class_category");'>Class</option>
+			<option onclick='switchForm("address_category");'>Address</option>
 		</select>
 	</form>
 
@@ -71,6 +73,14 @@
 		<?php CreateList("class_code", "class_code", "subject", $class_sql, "font-size:8pt;"); ?>
 		<input type="submit" name="submit_class_list" value="Go">
 	</form>
+
+	<span style="clear: both; display: none" id="address_category">
+		<form action="" method="post" style="margin-left: 10px;display:block">
+			<label for="barangay">Barangay: </label><input type="text" name="barangay" id="barangay">
+			<label for="town">Town: </label><input type="text" name="town" id="town">
+			<button type="submit" name="submit_address_list">Go</button>
+		</form>
+	</span>
 
 	<form method="post" action="">
 		<input type="submit" value="Show All" name="submit_all" style="float: right;" />
@@ -184,16 +194,32 @@
 	}
 
 	if (isset($_POST['submit_college_list'])) {
-		$list = mysqli_query($db, "SELECT idext, stud_enrol.idnum, cr_num, 
-			CONCAT(lname,', ',fname,' ',mi) AS 'Name', 
-			cr_acrnm, year FROM stud_info, stud_enrol, courses 
-			WHERE stud_enrol.idnum = stud_info.idnum 
-			AND courses.cr_num=stud_enrol.course 
+		$list = mysqli_query($db, "SELECT idext, stud_enrol.idnum, cr_num,
+			CONCAT(lname,', ',fname,' ',mi) AS 'Name',
+			cr_acrnm, year FROM stud_info, stud_enrol, courses
+			WHERE stud_enrol.idnum = stud_info.idnum
+			AND courses.cr_num=stud_enrol.course
 			AND sem_code={$_SESSION['sem_code']}
-			AND stud_enrol.course IN 
+			AND stud_enrol.course IN
 				(SELECT cr_num FROM courses WHERE clg_no={$_REQUEST['clg_no']})
 			ORDER BY lname, fname");
 		$list_detail = "List of " . getCollegeAccronym($_REQUEST['clg_no']) . " Students";
+	}
+
+	if (isset($_POST['submit_address_list'])) {
+		$town = $_REQUEST['town'];
+		$brgy = $_REQUEST['barangay'];
+
+		$hasBar = $brgy ? " AND stud_info.addb='$brgy'" : "";
+
+		$list = $db->query("SELECT idext, stud_enrol.idnum, cr_num,
+		CONCAT(lname,', ',fname,' ',mi) AS 'Name',
+		cr_acrnm, year FROM stud_info, stud_enrol, courses
+		WHERE stud_enrol.idnum = stud_info.idnum
+		AND courses.cr_num=stud_enrol.course
+		AND sem_code={$_SESSION['sem_code']}
+		AND stud_info.addt='$town'" . $hasBar);
+		$list_detail = "List of students from $brgy, $town";
 	}
 	?>
 	<?php if (isset($list)) { ?>
