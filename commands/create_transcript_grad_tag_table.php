@@ -16,5 +16,5 @@ $db->query("CREATE TABLE transcript_grad_tag (
 if (mysqli_error($db)) {
     echo mysqli_error($db);
 } else {
-    echo "Successfully created ext_trans table";
+    echo "Successfully created ext_trans table\n";
 }

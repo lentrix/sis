@@ -15,7 +15,7 @@
     <a href="index.php?page=faculty_report">Faculty Report</a>
     <a href="index.php?page=enrolist">Enrolment List</a>
     <a href="index.php?page=promo_rep">Promotional Report</a>
-    <a href="index.php?page=transcript">Transcript Generator</a>
+    <a href="index.php?page=transcript/transcript">Transcript Generator</a>
     <a href="index.php?page=prospectus">Prospectus</a>
     <a href="index.php?page=graduates_report">Graduates Report</a>
     <a href="index.php?page=drop_out_filter">Drop Down Filter</a>
