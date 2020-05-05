@@ -22,9 +22,10 @@
 function getSubjects($idnum)
 {
    global $db;
-   $sbs = mysqli_query($db, "SELECT s.name, c.cunits, se.mgrade, se.rating FROM subjects s, sub_enrol se, class c
-          WHERE s.sub_code = c.sub_code AND se.class_code = c.class_code
-          AND se.idnum=$idnum AND se.sem_code={$_SESSION['sem_code']}");
+   $sbs = mysqli_query($db, "SELECT s.name, c.cunits, se.mgrade, se.rating
+         FROM subjects s, sub_enrol se, class c
+         WHERE s.sub_code = c.sub_code AND se.class_code = c.class_code
+         AND se.idnum=$idnum AND se.sem_code={$_SESSION['sem_code']}");
    return $sbs;
 }
 ?>
@@ -68,11 +69,26 @@ function getYears($cr_num)
          <td rowspan="<?= $rows ?>"><?php echo $stdr['cr_acrnm'] . "-" . $stdr['year']; ?></td>
          <td rowspan="<?= $rows ?>"><?php echo substr($stdr['gender'], 0, 1); ?></td>
          <?php while ($row = mysqli_fetch_row($sbs)) : ?>
-            <?php $units = (is_numeric($row[2]) && $row[2] > 3.0) ? 0 : $row[1]; ?>
+            <?php
+            $units = 0;
+            if(is_numeric($row[3])) {
+               if($row[3]>3) {
+                  $units = 0;
+               }else {
+                  $units = $row[1];
+               }
+            }else {
+               if(strcasecmp($row[3],'DR')==0 || strcasecmp($row[2],'DR')==0) {
+                  $units = "Dr";
+               }else {
+                  $units = "-";
+               }
+            }
+            ?>
             <td><?= $row[0] ?></td>
             <td><?= (is_numeric($row[2]) ? number_format($row[2], 2) : $row[2]) ?></td>
             <td><?= (is_numeric($row[3]) ? number_format($row[3], 2) : $row[3]) ?></td>
-            <td><?= (is_numeric($row[3]) ? $units : "-") ?></td>
+            <td><?= $units ?></td>
       </tr>
    <?php endwhile; ?>
 
@@ -84,7 +100,7 @@ function getYears($cr_num)
 
 
 
-<h1>Enrolment List</h1>
+<h1>Promotional Report</h1>
 
 <table border="1" width="100%">
    <tr>
