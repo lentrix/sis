@@ -74,7 +74,7 @@
 		<input type="submit" name="submit_class_list" value="Go">
 	</form>
 
-	<form action="" method="post" style="margin-left: 10px;display:block" id="address_category">
+	<form action="" method="post" style="margin-left: 10px;display:none" id="address_category">
 		&nbsp;<input type="text" name="barangay" id="barangay" placeholder="Barangay">
 		</label><input type="text" name="town" id="town" placeholder="Town">
 		<button type="submit" name="submit_address_list">Go</button>
