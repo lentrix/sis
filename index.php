@@ -17,6 +17,7 @@
 <meta charset="utf-8">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+<script src="library/jquery.js"></script>
 <script type="text/javascript" src="library/async.js"></script>
 <script type="text/javascript" src="library/compute_grade.js"></script>
 <script>
