@@ -74,13 +74,11 @@
 		<input type="submit" name="submit_class_list" value="Go">
 	</form>
 
-	<span style="clear: both; display: none" id="address_category">
-		<form action="" method="post" style="margin-left: 10px;display:block">
-			<label for="barangay">Barangay: </label><input type="text" name="barangay" id="barangay">
-			<label for="town">Town: </label><input type="text" name="town" id="town">
-			<button type="submit" name="submit_address_list">Go</button>
-		</form>
-	</span>
+	<form action="" method="post" style="margin-left: 10px;display:block" id="address_category">
+		&nbsp;<input type="text" name="barangay" id="barangay" placeholder="Barangay">
+		</label><input type="text" name="town" id="town" placeholder="Town">
+		<button type="submit" name="submit_address_list">Go</button>
+	</form>
 
 	<form method="post" action="">
 		<input type="submit" value="Show All" name="submit_all" style="float: right;" />
@@ -219,7 +217,8 @@
 		AND courses.cr_num=stud_enrol.course
 		AND sem_code={$_SESSION['sem_code']}
 		AND stud_info.addt='$town'" . $hasBar);
-		$list_detail = "List of students from $brgy, $town";
+		$hasbar = $brgy ? "$brgy, " : "";
+		$list_detail = "List of students from $hasbar $town";
 	}
 	?>
 	<?php if (isset($list)) { ?>
@@ -228,7 +227,7 @@
 			<input type="image" src="images/printButton.png" class="noprint" onclick="printThisDiv('printFrame','list_result')" style="float: right;">
 			<iframe id="printFrame" style="width: 0px; height: 0px; float: left; margin-left: -9999px"></iframe>
 
-			<h2 style="width:500px;">
+			<h2 style="width:500px;" class="center">
 				<?php echo $list_detail ?>
 			</h2>
 			<p style="margin-top: 0px;">(<?php getSemester($_SESSION['sem_code']); ?>) <br />
