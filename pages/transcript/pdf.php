@@ -156,6 +156,7 @@ class PDF extends FPDF
 
     function tableHeader($stInfo)
     {
+        $this->Cell(0,0.5,"",'TB',1);
         $this->AddPage();
         $this->SetY(65);
         $this->SetFont('Arial', 'B', 11);
