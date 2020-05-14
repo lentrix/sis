@@ -2,31 +2,17 @@
 <?php include("library/singles.php"); ?>
 <?php include("library/computations.php"); ?>
 
-<!-- Include Area --->
-<script type="text/javascript">
-	function switchForm(n) {
-		forms = new Array();
-		forms = new Array("course_category", "year_category", "course_year_category", "college_category", "class_category", "address_category");
-
-		for (i = 0; i < forms.length; i++) {
-			if (forms[i] == n) document.getElementById(forms[i]).style.display = 'block';
-			else document.getElementById(forms[i]).style.display = 'none';
-		}
-
-	}
-</script>
-
 <h1>Student Listings</h1>
 <div style="background: #fff; padding-top: 10px;height:28px;">
 	<form method="post" action="" style="float:left;">
 		List Category:
-		<select name="category">
-			<option onclick='switchForm("course_category");'>Course</option>
-			<option onclick='switchForm("year_category");'>Year</option>
-			<option onclick='switchForm("course_year_category");'>Course &amp; Year</option>
-			<option onclick='switchForm("college_category");'>College</option>
-			<option onclick='switchForm("class_category");'>Class</option>
-			<option onclick='switchForm("address_category");'>Address</option>
+		<select name="category" id="category">
+			<option value="course_category">Course</option>
+			<option value="year_category">Year</option>
+			<option value="course_year_category">Course &amp; Year</option>
+			<option value="college_category">College</option>
+			<option value="class_category">Class</option>
+			<option value="address_category">Address</option>
 		</select>
 	</form>
 
@@ -282,3 +268,23 @@
 		</table>
 	<?php } ?>
 </span>
+
+<script>
+	$(document).ready(function() {
+		function switchForm(n) {
+			forms = new Array();
+			forms = new Array("course_category", "year_category", "course_year_category", "college_category", "class_category", "address_category");
+
+			for (i = 0; i < forms.length; i++) {
+				if (forms[i] == n) document.getElementById(forms[i]).style.display = 'block';
+				else document.getElementById(forms[i]).style.display = 'none';
+			}
+
+		}
+
+		$("#category").change(function(){
+			var categ = $("#category option:selected").val();
+			switchForm(categ);
+		})
+	})
+</script>
