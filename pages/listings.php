@@ -75,8 +75,13 @@
 	</form>
 
 	<form action="" method="post" style="margin-left: 10px;display:none" id="address_category">
-		&nbsp;<input type="text" name="barangay" id="barangay" placeholder="Barangay">
-		</label><input type="text" name="town" id="town" placeholder="Town">
+		&nbsp;<input type="text" name="barangay" id="barangay" style="width: 150px" placeholder="Barangay">
+		</label><input type="text" name="town" id="town" style="width: 150px" placeholder="Town">
+		<select name="gender" id="gender">
+			<option value="ALL">All</option>
+			<option value="FEMALE">Female</option>
+			<option value="MALE">Male</option>
+		</select>
 		<button type="submit" name="submit_address_list">Go</button>
 	</form>
 
@@ -207,8 +212,10 @@
 	if (isset($_POST['submit_address_list'])) {
 		$town = $_REQUEST['town'];
 		$brgy = $_REQUEST['barangay'];
+		$gndr = $_REQUEST['gender'];
 
 		$hasBar = $brgy ? " AND stud_info.addb='$brgy'" : "";
+		$hasGen = $gndr!="ALL" ? " AND stud_info.gender='$gndr'" : "";
 
 		$list = $db->query("SELECT idext, stud_enrol.idnum, cr_num,
 		CONCAT(lname,', ',fname,' ',mi) AS 'Name',
@@ -216,9 +223,10 @@
 		WHERE stud_enrol.idnum = stud_info.idnum
 		AND courses.cr_num=stud_enrol.course
 		AND sem_code={$_SESSION['sem_code']}
-		AND stud_info.addt='$town'" . $hasBar);
+		AND stud_info.addt='$town'" . $hasBar . $hasGen);
 		$hasbar = $brgy ? "$brgy, " : "";
-		$list_detail = "List of students from $hasbar $town";
+		$gender = $gndr!="ALL" ? $gndr : "";
+		$list_detail = "List of $gender students from $hasbar $town";
 	}
 	?>
 	<?php if (isset($list)) { ?>
