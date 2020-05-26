@@ -51,45 +51,45 @@ class PDF extends FPDF
         $this->SetY(65);
         $this->SetFont('Arial', 'B', 12);
 
-        $this->Cell(15, 6, "Name: ", 0, 0, 'L');
-        $this->Cell(115, 6, "$stInfo->lname, $stInfo->fname $stInfo->mi", 'B', 1, 'L');
+        $this->Cell(15, 5.5, "Name: ", 0, 0, 'L');
+        $this->Cell(115, 5.5, "$stInfo->lname, $stInfo->fname $stInfo->mi", 'B', 1, 'C');
 
-        $this->Cell(45, 6, 'Student Number:', 0, 0, 'L');
-        $this->Cell(30, 6, "$stInfo->idnum-$stInfo->idext", 'B', 0, 'L');
-        $this->Cell(18, 6, "    Sex:", 0, 0, 'L');
-        $this->Cell(37, 6, "$stInfo->gender", 'B', 1, 'L');
+        $this->Cell(45, 5.5, 'Student Number:', 0, 0, 'L');
+        $this->Cell(30, 5.5, "$stInfo->idnum-$stInfo->idext", 'B', 0, 'L');
+        $this->Cell(18, 5.5, "    Sex:", 0, 0, 'L');
+        $this->Cell(37, 5.5, ucfirst(strtolower($stInfo->gender)), 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Date of Birth:", 0, 0, 'L');
-        $this->Cell(85, 6, date('F d, Y', strtotime($stInfo->bdate)), 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Date of Birth:", 0, 0, 'L');
+        $this->Cell(85, 5.5, date('F d, Y', strtotime($stInfo->bdate)), 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Place of Birth:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->place_of_birth, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Place of Birth:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->place_of_birth, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Nationality:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->nationality, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Nationality:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->nationality, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Religion:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->religion, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Religion:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->religion, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Parent/Guardians:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->guardians, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Parent/Guardians:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->guardians, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "          Address:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->gd_address, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "          Address:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->gd_address, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Home Address:", 0, 0, 'L');
-        $this->Cell(85, 6, strtoupper($stInfo->addb) . ', ' . ucfirst(strtolower($stInfo->addt)) . ', ' . ucfirst(strtolower($stInfo->addp)), 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Home Address:", 0, 0, 'L');
+        $this->Cell(85, 5.5, ucfirst(strtolower($stInfo->addb)) . ', ' . ucfirst(strtolower($stInfo->addt)) . ', ' . ucfirst(strtolower($stInfo->addp)), 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Date Admitted:", 0, 0, 'L');
-        $this->Cell(85, 6, date('F d, Y', strtotime($details->dt_admitted)), 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Date Admitted:", 0, 0, 'L');
+        $this->Cell(85, 5.5, date('F d, Y', strtotime($details->dt_admitted)), 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Entrance Data:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->entrance_data, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "Entrance Data:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->entrance_data, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "College of:", 0, 0, 'L');
-        $this->Cell(85, 6, $details->college, 'B', 1, 'L');
+        $this->Cell(45, 5.5, "College of:", 0, 0, 'L');
+        $this->Cell(85, 5.5, $details->college, 'B', 1, 'L');
 
-        $this->Cell(45, 6, "Preliminary Education:", 0, 1, 'L');
+        $this->Cell(45, 5.5, "Preliminary Education:", 0, 1, 'L');
 
         $this->Cell(45, 6, "", 0, 0, 'L');
         $this->Cell(90, 6, "Name of School", 1, 0, 'C');
@@ -102,8 +102,13 @@ class PDF extends FPDF
 
         $this->Cell(18, 6, "");
         $this->Cell(27, 6, "Secondary: ", 0, 0, 'L');
-        $this->Cell(90, 6, $details->secn, 1, 0, 'L');
-        $this->Cell(0, 6, $details->secn_sy, 1, 1, 'C');
+        $this->Cell(90, 6, $details->secn1, 1, 0, 'L');
+        $this->Cell(0, 6, $details->secn1_sy, 1, 1, 'C');
+
+        $this->Cell(18, 6, "");
+        $this->Cell(27, 6, "", 0, 0, 'L');
+        $this->Cell(90, 6, $details->secn2, 1, 0, 'L');
+        $this->Cell(0, 6, $details->secn2_sy, 1, 1, 'C');
 
         $this->Cell(18, 6, "");
         $this->Cell(27, 6, "Tertiary: ", 0, 0, 'L');
@@ -124,7 +129,7 @@ class PDF extends FPDF
     {
         $lh = 5;
         $this->SetFont('Arial', 'B', 12);
-        $this->Cell(0, 5.5, "{$sem['sy']} - {$sem['school']}", 'B', 1, 'L');
+        $this->Cell(0, 5.5, "{$sem['sy']} - {$sem['school']}, {$sem['address']}", 'B', 1, 'L');
         $this->Ln(2);
         $this->SetFont('Arial', '', 11);
         foreach ($rows as $row) {
@@ -138,16 +143,16 @@ class PDF extends FPDF
     }
 
     function renderGrad($sem) {
-        $lh = 5;
+        $lh = 4.5;
         if ($grad = getGrad($sem['idnum'], $sem['ordinal'])) {
-            $this->SetFont('Arial','B',10);
+            $this->SetFont('Arial','B',9);
             $this->Cell(0, 0.8, "", 'TB', 1);
             $this->Cell(45, $lh, "GRADUATED:", 0, 0, 'L');
             $this->MultiCell(0, $lh, $grad->degree, 0, 'L', 0);
             $this->Cell(45, $lh, "");
-            $this->MultiCell(0, $lh, $grad->so, 0, 'L', 0);
-            $this->Cell(45, $lh, "");
             $this->Cell(0, $lh, date('F d, Y', strtotime($grad->date)), 0, 1, 'L');
+            $this->Cell(45, $lh, "");
+            $this->MultiCell(0, $lh, $grad->so, 0, 'L', 0);
             $this->Cell(45, $lh, "");
             $this->Cell(0, $lh, $grad->remarks, 0, 1, 'L');
             $this->Cell(0, 1, "", 'T', 1);
@@ -160,7 +165,7 @@ class PDF extends FPDF
         $this->AddPage();
         $this->SetY(65);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell(140, 5.5, "Name: $stInfo->lname, $stInfo->fname", 0, 0, 'L');
+        $this->Cell(140, 5.5, "Name: $stInfo->lname, $stInfo->fname $stInfo->mi", 0, 0, 'L');
         $this->Cell(0, 5.5, "ID.No.: $stInfo->idnum-$stInfo->idext", 0, 1, 'R');
         $this->Cell(0, 3, "", 'T', 1, 'L');
         $this->Cell(45, 6, "Course No.", 1, 0, 'L');

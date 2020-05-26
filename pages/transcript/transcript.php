@@ -29,8 +29,10 @@ if (isset($_POST['save_details'])) {
     $date_issued = $_POST['date_issued'];
     $elem = $_POST['elem'];
     $elem_sy = $_POST['elem_sy'];
-    $secn = $_POST['secn'];
-    $secn_sy = $_POST['secn_sy'];
+    $secn1 = $_POST['secn1'];
+    $secn1_sy = $_POST['secn1_sy'];
+    $secn2 = $_POST['secn2'];
+    $secn2_sy = $_POST['secn2_sy'];
     $tcry = $_POST['tcry'];
     $tcry_sy = $_POST['tcry_sy'];
 
@@ -42,7 +44,7 @@ if (isset($_POST['save_details'])) {
         entrance_data='$entrance_data', college='$college', religion='$religion',
         orno='$orno', or_date='$or_date', remarks='$remarks',
         date_issued='$date_issued', elem='$elem', elem_sy='$elem_sy',
-        secn='$secn', secn_sy='$secn_sy', tcry='$tcry', tcry_sy='$tcry_sy',
+        secn1='$secn1', secn1_sy='$secn1_sy', secn2='$secn2', secn2_sy='$secn2_sy', tcry='$tcry', tcry_sy='$tcry_sy',
         revised=$year
         WHERE idnum=$idnum");
 
@@ -202,10 +204,16 @@ if(isset($_POST['delete-grad'])) {
                 <td><input type="text" name="elem_sy" id="elem_sy" value="<?= $td->elem_sy ?>"></td>
             </tr>
             <tr>
-                <td><label for="secn">Secondary:</label></td>
-                <td><input type="text" name="secn" id="secn" value="<?= $td->secn ?>"></td>
-                <td><label for="secn_sy">School Year:</label></td>
-                <td><input type="text" name="secn_sy" id="secn_sy" value="<?= $td->secn_sy ?>"></td>
+                <td><label for="secn1">Secondary:</label></td>
+                <td><input type="text" name="secn1" id="secn1" value="<?= $td->secn1 ?>"></td>
+                <td><label for="secn1_sy">School Year:</label></td>
+                <td><input type="text" name="secn1_sy" id="secn1_sy" value="<?= $td->secn1_sy ?>"></td>
+            </tr>
+            <tr>
+                <td><label for="secn2"></label></td>
+                <td><input type="text" name="secn2" id="secn2" value="<?= $td->secn2 ?>"></td>
+                <td><label for="secn2_sy">School Year:</label></td>
+                <td><input type="text" name="secn2_sy" id="secn2_sy" value="<?= $td->secn2_sy ?>"></td>
             </tr>
             <tr>
                 <td><label for="tcry">Tertiary:</label></td>
