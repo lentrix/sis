@@ -212,8 +212,8 @@ if (isset($_GET['idNumber'])) {
 
         $pdf->Ln(2);
     }
-
-    $pdf->Cell(0,4.5, "MDCMDCMDCMDCMDCMDCMDCMDC== TRANSCRIPT CLOSED ==MDCMDCMDCMDCMDCMDCMDCMDC", 'TB',1,'C');
+    $pdf->setFontSize(8.5);
+    $pdf->Cell(0,4.5, "MDCMDCMDCMDCMDCMDCMDCMDCMDCMDCMDC === TRANSCRIPT CLOSED === MDCMDCMDCMDCMDCMDCMDCMDCMDCMDCMDC", 'TB',1,'C');
 
 
 
