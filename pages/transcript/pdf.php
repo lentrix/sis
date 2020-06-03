@@ -133,6 +133,7 @@ class PDF extends FPDF
         $this->Ln(2);
         $this->SetFont('Arial', '', 11);
         foreach ($rows as $row) {
+            if($sem)
             $this->Cell(45, $lh, $row['course'], 0, 0, 'L');
             $this->Cell(120, $lh, strtoupper($row['description']), 0, 0, 'L');
             $this->Cell(15, $lh, $row['rating'], 0, 0, 'C');
