@@ -7,6 +7,7 @@ function checkForBlank($arr){
 }
 
 function check($item){
+	
 	if(isset($_REQUEST[$item])){
 		if( empty($_REQUEST[$item])) echo "style=\"border-color: red;\"";
 		else echo "value='{$_REQUEST[$item]}'";
@@ -34,6 +35,7 @@ function checkRoomTimeConflict($start_time, $end_time, $rm_no, $day, $class_code
 }
 
 function checkTeacherTimeConflict($start_time, $end_time, $tch_num, $day, $class_code=0){
+	global $db;
     $start_time_plus = date('g:i', strtotime($start_time . " + 1min"));
     $end_time_minus = date('g:i', strtotime($end_time . " - 1min"));
 	$conflict = mysqli_query($db, "SELECT CONCAT(lname,', ',fname,' ',mi) AS 'teacher',t_start, t_end, descript, day	
@@ -51,7 +53,7 @@ function checkTeacherTimeConflict($start_time, $end_time, $tch_num, $day, $class
 }
 
 function checkStudentSubjectTimeConflict($start_time, $end_time, $idnum, $day){
-
+	global $db;
 	$start_time_plus = date('g:i', strtotime($start_time . " + 1min"));
 	$end_time_minus = date('g:i', strtotime($end_time . " - 1min"));
 
