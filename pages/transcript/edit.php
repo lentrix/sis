@@ -26,7 +26,7 @@ if (isset($_GET['sem'])) :
             die(mysqli_error($db));
         }
 
-        for ($i = 0; $i < 12; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             $rowId = $_POST['rowId'][$i];
             $course = $db->real_escape_string($_POST['course'][$i]);
             $description = $db->real_escape_string($_POST['description'][$i]);
@@ -103,7 +103,7 @@ if (isset($_GET['sem'])) :
                 </tr>
             </thead>
             <tbody>
-                <?php for ($i = 0; $i < 12; $i++) : ?>
+                <?php for ($i = 0; $i < 15; $i++) : ?>
                     <input type="hidden" name="rowId[]" value="<?= isset($rows[$i]) ? $rows[$i]['id'] : '' ?>">
                     <tr>
                         <td>

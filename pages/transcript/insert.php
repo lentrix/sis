@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
 
     $generated_key = mysqli_insert_id($db);
 
-    for($i=0; $i<12; $i++) {
+    for($i=0; $i<15; $i++) {
         if($_POST['course'][$i]) {
             $course = $_POST['course'][$i];
             $description = $_POST['description'][$i];
@@ -98,7 +98,7 @@ if(isset($_POST['submit'])) {
             </tr>
         </thead>
         <tbody>
-            <?php for($i=0; $i<12; $i++): ?>
+            <?php for($i=0; $i<15; $i++): ?>
                 <tr>
                     <td>
                         <input type="text" name="course[]" style="width: 100%">
