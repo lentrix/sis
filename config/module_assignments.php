@@ -10,7 +10,7 @@ $modules['deans'] = array("home","profile","view_student","subjects","view_edit_
 	"view_teacher_classes","prospectus_builder","view_edit_prospectus",
         "evaluation","class_transfer","listings","rooms",
 		"deans_list","exam_sched","drop_out_filter","student_grades",
-		"transcript/transcript","transcript/view", "transcript/pdf");
+		"transcript/transcript","transcript/view", "transcript/pdf","enrol");
 $modules['billing'] = array("home","profile","ledger","passbook","view_student", "payunits","edit_payment",
 	"accounts","payments","lab_fees","fees_gen","listings","class_density","units_report","stud_payments",
     "teachers_load_finance","icl","class_time_summary");
