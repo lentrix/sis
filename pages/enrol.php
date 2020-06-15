@@ -2,6 +2,7 @@
 <?php include("library/checker.php"); ?>
 <?php include("library/population.php"); ?>
 <?php include("library/singles.php"); ?>
+<?php include("library/computations.php"); ?>
 
 <h1>Enrolment</h1>
 
@@ -116,8 +117,9 @@
 						mysqli_query($db, "UPDATE stud_enrol SET course={$_REQUEST['course']}, year='{$_REQUEST['year']}', en_status='{$_REQUEST['en_status']}'
 				    WHERE idnum={$_REQUEST['idnum']} AND sem_code={$_SESSION['sem_code']}");
 					} else {
-						mysqli_query($db, "INSERT INTO stud_enrol (idnum, sem_code, course, year, en_status)
-					VALUES ({$_REQUEST['idnum']},{$_SESSION['sem_code']},{$_REQUEST['course']},'{$_REQUEST['year']}','{$_REQUEST['en_status']}')");
+						$rate = getRate2($_REQUEST['idnum']);
+						mysqli_query($db, "INSERT INTO stud_enrol (idnum, sem_code, course, year, en_status, rate)
+					VALUES ({$_REQUEST['idnum']},{$_SESSION['sem_code']},{$_REQUEST['course']},'{$_REQUEST['year']}','{$_REQUEST['en_status']}', $rate)");
 					}
 					if (mysqli_error($db)) echo "<div class='error'>" . mysqli_error($db) . "</div>";
 					else echo "<div class='error'>Records updated.</div>";

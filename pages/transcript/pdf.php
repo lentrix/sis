@@ -57,7 +57,7 @@ class PDF extends FPDF
         $this->Cell(45, 5.5, 'Student Number:', 0, 0, 'L');
         $this->Cell(30, 5.5, "$stInfo->idnum-$stInfo->idext", 'B', 0, 'L');
         $this->Cell(18, 5.5, "    Sex:", 0, 0, 'L');
-        $this->Cell(37, 5.5, ucfirst(strtolower($stInfo->gender)), 'B', 1, 'L');
+        $this->Cell(37, 5.5, ucwords(strtolower($stInfo->gender)), 'B', 1, 'L');
 
         $this->Cell(45, 5.5, "Date of Birth:", 0, 0, 'L');
         $this->Cell(85, 5.5, date('F d, Y', strtotime($stInfo->bdate)), 'B', 1, 'L');
@@ -78,7 +78,7 @@ class PDF extends FPDF
         $this->Cell(85, 5.5, $details->gd_address, 'B', 1, 'L');
 
         $this->Cell(45, 5.5, "Home Address:", 0, 0, 'L');
-        $this->Cell(85, 5.5, ucfirst(strtolower($stInfo->addb)) . ', ' . ucfirst(strtolower($stInfo->addt)) . ', ' . ucfirst(strtolower($stInfo->addp)), 'B', 1, 'L');
+        $this->Cell(85, 5.5, ucwords(strtolower($stInfo->addb)) . ', ' . ucwords(strtolower($stInfo->addt)) . ', ' . ucwords(strtolower($stInfo->addp)), 'B', 1, 'L');
 
         $this->Cell(45, 5.5, "Date Admitted:", 0, 0, 'L');
         $this->Cell(85, 5.5, date('F d, Y', strtotime($details->dt_admitted)), 'B', 1, 'L');
@@ -118,7 +118,7 @@ class PDF extends FPDF
         //check availability of picture
         $file = "../../images/portraits/$stInfo->idnum.jpg";
         if (file_exists($file)) {
-            $this->Image($file, 145, 62, 61, 0);
+            $this->Image($file, 145, 57, 61, 0);
         }
 
         //grading system image..
@@ -140,7 +140,7 @@ class PDF extends FPDF
             $this->Cell(15, $lh, $row['units'], 0, 1, 'C');
         }
 
-        $this->Ln(2);
+        $this->Ln(1);
     }
 
     function renderGrad($sem) {
@@ -164,7 +164,7 @@ class PDF extends FPDF
     {
         $this->Cell(0,0.5,"",'TB',1);
         $this->AddPage();
-        $this->SetY(65);
+        $this->SetY(55);
         $this->SetFont('Arial', 'B', 11);
         $this->Cell(140, 5.5, "Name: $stInfo->lname, $stInfo->fname $stInfo->mi", 0, 0, 'L');
         $this->Cell(0, 5.5, "ID.No.: $stInfo->idnum-$stInfo->idext", 0, 1, 'R');
@@ -185,7 +185,7 @@ if (isset($_GET['idNumber'])) {
     $pdf->firstPage();
 
     //distribute semesters to pages...
-    $limit = 33;
+    $limit = 34;
     $rowCount = $limit;
     $sems = getSems($idNumber);
     foreach ($sems as $sem) {
