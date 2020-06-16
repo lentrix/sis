@@ -4,7 +4,7 @@ $modules['enrolment'] = array("home","profile","student","enrol","subjects","lis
 	"enrolment_report","faculty_report","enrolist","transcript/transcript","graduates_report",
 	"drop_out_filter","prospectus","prospectus_builder","view_edit_prospectus",
 	"student_subjects_selector","promo_rep","transcript/view", "transcript/insert",
-	"transcript/edit","transcript/delete", "transcript/pdf","transcript/grad");
+	"transcript/edit","transcript/delete", "transcript/pdf","transcript/grad", "transcript/thesis");
 $modules['deans'] = array("home","profile","view_student","subjects","view_edit_subject",
 	"classes","prospectus","view_edit_class","teachers","student_subjects",
 	"view_teacher_classes","prospectus_builder","view_edit_prospectus",

@@ -160,6 +160,15 @@ class PDF extends FPDF
         }
     }
 
+    function renderThesis($sem) {
+        $lh = 4.5;
+        if($thesis = getThesis($sem['idnum'], $sem['ordinal'])) {
+            $this->SetFont('Arial','',9);
+            $this->MultiCell(0, $lh, "THESIS: " . $thesis->title, 0, 'J',false);
+            $this->Cell(0,1, "" ,'T',1);
+        }
+    }
+
     function tableHeader($stInfo)
     {
         $this->Cell(0,0.5,"",'TB',1);
@@ -208,6 +217,14 @@ if (isset($_GET['idNumber'])) {
         }
 
         $pdf->renderGrad($sem);
+
+        $thesisRows = countThesisTagRows($sem);
+        if($thesisRows + $rowCount > $limit) {
+            $pdf->tableHeader($stInfo);
+            $rowCount = 0;
+        }
+
+        $pdf->renderThesis($sem);
 
         $rowCount += $gradRows;
 

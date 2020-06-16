@@ -42,8 +42,8 @@ while ($enrols = mysqli_fetch_object($enrolsSQL)) {
         WHERE sub_enrol.idnum = $id AND sub_enrol.sem_code=$enrols->sem_code");
 
     while ($classes = mysqli_fetch_object($classesSQL)) {
-        $rating = is_numeric($classes->rating) ? number_format($classes->rating, 2) : '-';
-        $units = (is_numeric($classes->cunits) && (is_numeric($classes->rating) && $classes->rating<=3.0) ) ? $classes->cunits : 0;
+        $rating = $classes->rating=='pass' ? 'Passed' : ( is_numeric($classes->rating) ? number_format($classes->rating, 2) : '-');
+        $units = (is_numeric($classes->cunits) && (is_numeric($classes->rating) && $classes->rating<=3.0) || $classes->rating=='pass' ) ? $classes->cunits : 0;
         
         if($enrols->en_status=="withdrawn") {
             $rating = "w";

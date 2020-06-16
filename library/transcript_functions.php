@@ -130,3 +130,19 @@ $gradTag = $db->query("SELECT * FROM transcript_grad_tag WHERE idnum={$sem['idnu
         return 0;
     }
 }
+
+function countThesisTagRows($sem) {
+    global $db;
+    $thesisTag = $db->query("SELECT * FROM transcript_thesis_tag WHERE idnum={$sem['idnum']} AND ordinal = {$sem['ordinal']}")->fetch_object();
+    if($thesisTag) {
+        return 2;
+    }else {
+        return 0;
+    }
+}
+
+function getThesis($idnum, $sem) {
+    global $db;
+    $thesisTag = $db->query("SELECT * FROM transcript_thesis_tag WHERE idnum=$idnum AND ordinal=$sem")->fetch_object();
+    return $thesisTag;
+}

@@ -60,6 +60,13 @@ if(isset($_POST['delete-grad'])) {
     $db->query("DELETE FROM transcript_grad_tag WHERE idnum=$idnum AND ordinal=$ordinal");
 }
 
+if(isset($_POST['delete-thesis'])) {
+    $idnum = $_POST['idnum'];
+    $ordinal = $_POST['ordinal'];
+
+    $db->query("DELETE FROM transcript_thesis_tag WHERE idnum=$idnum AND ordinal=$ordinal");
+}
+
 ?>
 
 <h1>Transcript Generator</h1>
@@ -135,12 +142,27 @@ if(isset($_POST['delete-grad'])) {
                             <input type="hidden" name="ordinal" value="<?= $grad->ordinal ?>">
                             <button type="submit" name="delete-grad">X</button>
                         </form>
-                        GRADUATED: <?= $grad->degree ?> <br>
-                        DATE: <?= date('F d, Y', strtotime($grad->date)) ?> <br>
-                        <?= $grad->so ?> <br>
-                        <?= $grad->remarks ?>
+                        <div>
+                            GRADUATED: <?= $grad->degree ?> <br>
+                            DATE: <?= date('F d, Y', strtotime($grad->date)) ?> <br>
+                            <?= $grad->so ?> <br>
+                            <?= $grad->remarks ?>
+                        </div>
                     <?php else : ?>
                         <button style="font-size: 12px; float: right" onclick="window.location='index.php?page=transcript/grad&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Grad</button>
+                    <?php endif; ?>
+
+                    <?php if($thesis = getThesis($id, $sem->ordinal)) : ?>
+                        <form action="" method="post" style="float :right">
+                            <input type="hidden" name="idnum" value="<?= $grad->idnum ?>">
+                            <input type="hidden" name="ordinal" value="<?= $grad->ordinal ?>">
+                            <button type="submit" name="delete-thesis">X</button>
+                        </form>
+                        <div>
+                            THESIS: <?= $thesis->title ?> <br>
+                        </div>
+                    <?php else: ?>
+                        <button style="font-size: 12px; float: right" onclick="window.location='index.php?page=transcript/thesis&idnum=<?= $id ?>&sem=<?= $sem->id ?>'">Thesis</button>
                     <?php endif; ?>
                 </td>
             </tr>
