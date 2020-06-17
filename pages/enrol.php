@@ -4,6 +4,8 @@
 <?php include("library/singles.php"); ?>
 <?php include("library/computations.php"); ?>
 
+<?php $user = $_SESSION['user']; ?>
+
 <h1>Enrolment</h1>
 
 <div>
@@ -104,8 +106,11 @@
 				<?php if (mysqli_num_rows($en)) { ?>
 					<form action="" method="post" style="display:inline-block; float: right;">
 						<input type="hidden" name="idnum" value="<?php echo $_REQUEST['idnum']; ?>" />
-						<input type="submit" name="submit_delete_enrol" value="Delete" />
-						<input type="submit" value="Withdraw" name="submit_withdraw_enrol" />
+
+						<?php if(getEnrolmentModule($user) != null): ?>
+							<input type="submit" name="submit_delete_enrol" value="Delete" />
+							<input type="submit" value="Withdraw" name="submit_withdraw_enrol" />
+						<?php endif; ?>
 					</form>
 				<?php
 				}

@@ -116,4 +116,12 @@ function getTranscriptSemName($semId) {
 	$data = $db->query("SELECT sy FROM transcript_sem WHERE id=$semId");
 	return $data->fetch_assoc()['sy'];
 }
+
+function getEnrolmentModule($user) {
+	global $db;
+
+	$data = $db->query("SELECT * FROM modassgn WHERE user='$user' AND modlno=1")->fetch_object();
+
+	return $data;
+}
 ?>
